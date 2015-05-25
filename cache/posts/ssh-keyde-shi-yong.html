@@ -1,0 +1,83 @@
+<h4>進入ssh目錄</h4>
+<p>首先先到個人的 ssh目錄</p>
+<pre class="code literal-block"><span class="nv">$ </span><span class="nb">cd</span> ~/.ssh
+</pre>
+
+
+<p>如果沒有這個目錄, 需手動建一個</p>
+<pre class="code literal-block"><span class="nv">$ </span>mkdir .ssh
+</pre>
+
+
+<h4>建立新的 SSH key</h4>
+<p>產生一個新的SSH key, 可以使用下列指令</p>
+<pre class="code literal-block"><span class="nv">$ </span>ssh-keygen -t rsa
+</pre>
+
+
+<p>依照提示, 輸入你的密碼後,就可以在 <code>.ssh</code>目錄下看到 <code>id_rsa</code>及<code>id_rsa.pub</code>,這二個檔.<code>id_rsa.pub</code> 就是公鑰, 而</p>
+<!-- TEASER_END -->
+
+<h4>將公鑰放入主機</h4>
+<p>先把公鑰放到主機</p>
+<pre class="code literal-block"><span class="nv">$ </span>scp ~/.ssh/*.pub <span class="o">[</span>目的主機<span class="o">]</span>:~/.ssh/.
+</pre>
+
+
+<p>登入主機</p>
+<pre class="code literal-block"><span class="nv">$ </span>ssh <span class="o">[</span>username<span class="o">]</span>@<span class="o">[</span>目的主機<span class="o">]</span>
+</pre>
+
+
+<p>把公鑰存到主機. 系統預設處理公鑰的檔案為<code>authorized_keys</code>,這個檔案必須把權限設為只有使用者具有寫的權限</p>
+<pre class="code literal-block"><span class="nv">$ </span>cat ~/.ssh/identity.pub &gt;&gt; ~/.ssh/authorized_keys
+<span class="nv">$ </span>chmod <span class="m">711</span> ~/.ssh
+<span class="nv">$ </span>chmod <span class="m">644</span> ~/.ssh/authorized_keys
+</pre>
+
+
+<h4>設定 <code>ssh-agent</code></h4>
+<p>起動 ssh-agent</p>
+<pre class="code literal-block"><span class="nv">$ </span><span class="nb">eval</span> <span class="sb">`</span>ssh-agent -s<span class="sb">`</span>
+</pre>
+
+
+<p>新增 key</p>
+<pre class="code literal-block"><span class="nv">$ </span>ssh-add
+</pre>
+
+
+<h4>自動化執行</h4>
+<p>參考<a href="http://www.cygwin.com/ml/cygwin/2001-06/msg00537.html" title="useful cygwin ssh-agent script">Joseph M. Reagle Jr.</a></p>
+<p>放在 .bash_profile 的 script</p>
+<p>SH_ENV="$HOME/.ssh/environment"</p>
+<pre class="code literal-block">    function start_agent {
+       echo &quot;Initialising new SSH agent...&quot;
+       /usr/bin/ssh-agent | sed &#39;s/^echo/#echo/&#39; &gt; &quot;<span class="cp">${</span><span class="n">SSH_ENV</span><span class="cp">}</span>&quot;
+       echo succeeded
+       chmod 600 &quot;<span class="cp">${</span><span class="n">SSH_ENV</span><span class="cp">}</span>&quot;
+       . &quot;<span class="cp">${</span><span class="n">SSH_ENV</span><span class="cp">}</span>&quot; &gt; /dev/null
+    /usr/bin/ssh-add;
+    }
+
+    # Source SSH settings, if applicable
+
+    if [ -f &quot;<span class="cp">${</span><span class="n">SSH_ENV</span><span class="cp">}</span>&quot; ]; then
+       . &quot;<span class="cp">${</span><span class="n">SSH_ENV</span><span class="cp">}</span>&quot; &gt; /dev/null
+       #ps <span class="cp">${</span><span class="n">SSH_AGENT_PID</span><span class="cp">}</span> doesn’t work under cywgin
+       ps -ef | grep <span class="cp">${</span><span class="n">SSH_AGENT_PID</span><span class="cp">}</span> | grep ssh-agent$ &gt; /dev/null || {
+       start_agent;
+   }
+    else
+     start_agent;
+    fi
+</pre>
+
+
+<h4>使用 ssh config 來對映多個ssh 帳號</h4>
+<p>編輯<code>~/.ssh/config</code>, 如果沒有就建一個. 文件格式為</p>
+<pre class="code literal-block">        Host [名稱]
+            HostName [主機名]
+            User [使用者登入ID]
+            IdentityFile [私鑰路徑]
+</pre>
