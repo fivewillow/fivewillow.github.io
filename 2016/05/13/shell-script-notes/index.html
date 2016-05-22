@@ -1,0 +1,797 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Noto Sans Hant:300,300italic,400,400italic,700,700italic|Noto Sans Hant:300,300italic,400,400italic,700,700italic|Noto Sans Hant:300,300italic,400,400italic,700,700italic|Menlo:300,300italic,400,400italic,700,700italic|Menlo:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux,shell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥的幫助來找尋。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Shell Script 的筆記">
+<meta property="og:url" content="www.lawrencelin.info/2016/05/13/shell-script-notes/index.html">
+<meta property="og:site_name" content="Lawrence's blog">
+<meta property="og:description" content="有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥的幫助來找尋。">
+<meta property="og:updated_time" content="2016-05-22T07:13:26.491Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Shell Script 的筆記">
+<meta name="twitter:description" content="有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥的幫助來找尋。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Linux Shell Script 的筆記 | Lawrence's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-44038136-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Lawrence's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux Shell Script 的筆記
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T00:42:16+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/shell-script-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/13/shell-script-notes/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h1>
+<p>&#x6709;&#x6642;&#xFF0C;&#x6211;&#x5011;&#x6703;&#x5BEB;&#x4E00;&#x4E9B; Shell Script &#x4E4B;&#x985E;&#x7684;&#x5C0F;&#x5DE5;&#x5177;&#x4F86;&#x7BA1;&#x7406;&#x6216;&#x64CD;&#x4F5C; Linux&#x7CFB;&#x7D71;&#xFF0C;&#x4EE5;&#x6E1B;&#x5C11;&#x7169;&#x7463;&#x7684;&#x6307;&#x4EE4;&#x8F38;&#x5165;&#x3002;&#x4E0D;&#x904E;&#x5728; Shell Script &#x4E2D;&#xFF0C;&#x5E38;&#x6709;&#x4E00;&#x4E9B;&#x96B1;&#x6666;&#x53C8;&#x96E3;&#x7406;&#x89E3;&#x7684;&#x8A9E;&#x6CD5;&#x6216;&#x8868;&#x793A;&#x6CD5;&#xFF0C;&#x6BCF;&#x7576;&#x9700;&#x8981;&#x7528;&#x6642;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x9760; google&#x5927;&#x795E;&#x6216; <a href="http://linux.vbird.org/" target="_blank" rel="external">&#x9CE5;&#x54E5;</a> &#x7684;&#x5E6B;&#x52A9;&#x4F86;&#x627E;&#x5C0B;&#x3002;
+&#x9019;&#x4E9B;&#x8CC7;&#x6599;&#x5927;&#x591A;&#x662F;&#x6211;&#x5728;&#x7DB2;&#x8DEF;&#x4E0A;&#x641C;&#x5C0B;&#x7684;&#x8A18;&#x9304;&#xFF0C;&#x4EE5;&#x4FBF;&#x65E5;&#x5F8C;&#x9047;&#x5230;&#x6642;&#xFF0C;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x5730;&#x67E5;&#x5C0B;&#x3002;</p>
+<h1 id="&#x57FA;&#x672C;&#x8A9E;&#x6CD5;">&#x57FA;&#x672C;&#x8A9E;&#x6CD5;</h1>
+<h2 id="if-then-&#x8FF0;&#x53E5;">if ... then &#x8FF0;&#x53E5;</h2>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ condition1 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="comment"># do something 1</span></span><br><span class="line"><span class="keyword">elif</span> [ condition2 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="comment"># do something 2</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="comment"># others</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="while-&#x53CA;-until-&#x8FF0;&#x53E5;">while &#x53CA; until &#x8FF0;&#x53E5;</h2>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x7576; condition &#x6210;&#x7ACB;&#x6642;&#xFF0C;&#x5C31;&#x57F7;&#x884C;&#x8FF4;&#x5708;</span></span><br><span class="line"><span class="keyword">while</span> [ condition ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x7576; condition &#x6210;&#x7ACB;&#x6642;&#xFF0C;&#x5C31;&#x7D42;&#x6B62;&#x8FF4;&#x5708;</span></span><br><span class="line">until [ condition ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="for-&#x8FF4;&#x5708;">for &#x8FF4;&#x5708;</h2>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> word1 word2 &#x2026;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (( &#x521D;&#x59CB;&#x503C;; &#x9650;&#x5236;&#x503C;; &#x57F7;&#x884C;&#x6B65;&#x968E; ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="case-&#x5224;&#x65B7;">case &#x5224;&#x65B7;</h2>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> word <span class="keyword">in</span></span><br><span class="line">    pattern1)</span><br><span class="line">      <span class="comment"># do something 1</span></span><br><span class="line">      ;;</span><br><span class="line">    pattern2)</span><br><span class="line">      <span class="comment"># do something 2</span></span><br><span class="line">      ;;</span><br><span class="line">    *)</span><br><span class="line">      <span class="comment"># &#x90FD;&#x4E0D;&#x7B26;&#x5408;&#xFF0C;&#x5C31;&#x57F7;&#x884C;&#x9019;&#x7684;&#x7A0B;&#x5F0F;</span></span><br><span class="line">      ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="function">function</h2>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">function_name</span></span>() {</span><br><span class="line">true<span class="comment"># code</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<p>&#x51FD;&#x5F0F;&#x6709;&#x5E7E;&#x500B;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x5730;&#x65B9;:</p>
+<ul>
+<li>&#x5728;&#x4F7F;&#x7528;&#x51FD;&#x5F0F;&#x4E4B;&#x524D;&#x4E00;&#x5B9A;&#x8981;&#x5148;&#x5B9A;&#x7FA9;&#x5B83;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5728;&#x4E00;&#x500B; Shell Script &#x4E2D;&#xFF0C;&#x4E00;&#x5B9A;&#x8981;&#x5148;&#x5BEB;&#x51FD;&#x5F0F;&#x7684;&#x5167;&#x5BB9;&#xFF0C;&#x5728;&#x6A94;&#x6848;&#x6700;&#x5F8C;&#x518D;&#x5BEB;&#x6703;&#x547C;&#x53EB;&#x51FD;&#x5F0F;&#x7684;&#x7A0B;&#x5F0F;&#x90E8;&#x4EFD;&#x3002;</li>
+<li>&#x5728; Shell Script &#x4E2D;&#x7684;&#x8B8A;&#x6578;&#x5168;&#x90E8;&#x90FD;&#x662F;&#x5168;&#x57DF;&#x8B8A;&#x6578; (Global)&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x51FD;&#x5F0F;&#x4E2D;&#x7684;&#x8B8A;&#x6578;&#x4E5F;&#x6703;&#x5F71;&#x97FF;&#x51FD;&#x5F0F;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x90E8;&#x4EFD;&#x3002;</li>
+<li>&#x547D;&#x4EE4;&#x5217;&#x8F38;&#x5165;&#x7684;&#x53C3;&#x6578;&#x5728; Shell Script &#x4E2D;&#x662F;&#x4EE5; $1, $2....&#x4F86;&#x8B80;&#x53D6;&#xFF0C;&#x4F46;&#x662F;&#x9019;&#x4E9B;&#x53C3;&#x6578;&#x4E26;&#x4E0D;&#x6703;&#x5728;&#x51FD;&#x5F0F;&#x4E2D;&#x51FA;&#x73FE;&#x3002;&#x6240;&#x4EE5;&#x5FC5;&#x9808;&#x4F7F;&#x7528;&#x50B3;&#x905E;&#x53C3;&#x6578;&#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x5C07;&#x8981;&#x5728;&#x51FD;&#x5F0F;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x8B8A;&#x6578;&#x50B3;&#x7D66;&#x8A72;&#x51FD;&#x5F0F;&#x3002;&#x50B3;&#x905E;&#x7684;&#x65B9;&#x6CD5;&#x548C;&#x5728;&#x547D;&#x4EE4;&#x5217;&#x4E2D;&#x4F7F;&#x7528; Shell Script &#x7684;&#x65B9;&#x5F0F;&#x4E00;&#x6A23;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;name arg1 arg2..&#x3002;&#x50B3;&#x9032;&#x51FD;&#x5F0F;&#x7684;&#x8B8A;&#x6578;&#x6703;&#x4EE5; $1,$2... &#x4F86;&#x5132;&#x5B58;&#xFF0C;&#x9019;&#x548C;&#x547D;&#x4EE4;&#x5217;&#x50B3;&#x7D66; Shell Script &#x7684;&#x53C3;&#x6578;&#x540D;&#x7A31;&#x4E00;&#x6A23;&#x4F46;&#x5167;&#x5BB9;&#x4E0D;&#x540C;&#x3002;</li>
+</ul>
+<h1 id="&#x958B;&#x982D;&#x7684;&#x5167;&#x96B1;&#x8B8A;&#x6578;">$ &#x958B;&#x982D;&#x7684;&#x5167;&#x96B1;&#x8B8A;&#x6578;</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">&#x8B8A;&#x6578;&#x540D;&#x7A31;</th>
+<th style="text-align:left">&#x8AAA;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$?</td>
+<td style="text-align:left">&#x8868;&#x793A;&#x4E0A;&#x4E00;&#x500B;&#x6307;&#x4EE4;&#x7684;&#x96E2;&#x958B;&#x72C0;&#x6CC1;&#xFF0C;&#x4E00;&#x822C;&#x6307;&#x4EE4;&#x6B63;&#x5E38;&#x96E2;&#x958B;&#x6703;&#x50B3;&#x56DE; 0&#x3002;&#x4E0D;&#x6B63;&#x5E38;&#x96E2;&#x958B;&#x5247;&#x6703;&#x50B3;&#x56DE; 1&#x3001;2 &#x7B49;&#x6578;&#x503C;&#x3002;</td>
+</tr>
+<tr>
+<td style="text-align:left">$$</td>
+<td style="text-align:left">&#x9019;&#x4E00;&#x500B; shell &#x7684; process ID number</td>
+</tr>
+<tr>
+<td style="text-align:left">$!</td>
+<td style="text-align:left">&#x6700;&#x5F8C;&#x4E00;&#x500B;&#x5728;&#x80CC;&#x666F;&#x57F7;&#x884C;&#x7684;&#x7A0B;&#x5F0F;&#x7684; process number</td>
+</tr>
+<tr>
+<td style="text-align:left">$-</td>
+<td style="text-align:left">&#x9019;&#x500B;&#x53C3;&#x6578;&#x5305;&#x542B;&#x4E86;&#x50B3;&#x905E;&#x7D66; shell &#x65D7;&#x6A19; (flag)</td>
+</tr>
+<tr>
+<td style="text-align:left">$n</td>
+<td style="text-align:left">n &#x7232;&#x6578;&#x5B57;&#x3002;$1&#x4EE3;&#x8868;&#x7B2C;&#x4E00;&#x500B;&#x53C3;&#x6578;&#xFF0C;$2 &#x5247;&#x70BA;&#x7B2C;&#x4E8C;&#x500B;&#x53C3;&#x6578;&#xFF0C;&#x4F9D;&#x6B64;&#x985E;&#x63A8;&#x3002;&#x800C; $0 &#x70BA;&#x9019;&#x500B; shell script &#x7684;&#x6A94;&#x540D;&#x3002;</td>
+</tr>
+<tr>
+<td style="text-align:left">$#</td>
+<td style="text-align:left">Shell Script &#x53C3;&#x6578;&#x7684;&#x500B;&#x6578;</td>
+</tr>
+<tr>
+<td style="text-align:left">$*</td>
+<td style="text-align:left">&#x5305;&#x542B;&#x6240;&#x6709;&#x8F38;&#x5165;&#x7684;&#x53C3;&#x6578;&#xFF1B;&#x5C07;&#x6240;&#x6709;&#x53C3;&#x6578;&#x7121;&#x9593;&#x9694;&#x7684;&#x9023;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x5B58;&#x6210;&#x4E00;&#x500B;&#x55AE;&#x4E00;&#x7684;&#x53C3;&#x6578;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8AAA; $* &#x4EE3;&#x8868;&#x4E86; &quot;$1 $2 $3...&quot;&#x3002;</td>
+</tr>
+<tr>
+<td style="text-align:left">$@</td>
+<td style="text-align:left">&#x5305;&#x542B;&#x6240;&#x6709;&#x8F38;&#x5165;&#x7684;&#x53C3;&#x6578;&#xFF1B;&#x5C07;&#x6240;&#x6709;&#x53C3;&#x6578;&#x4EE5;&#x7A7A;&#x767D;&#x70BA;&#x9593;&#x9694;&#xFF0C;&#x5B58;&#x5728; $@ &#x4E2D;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8AAA; $@ &#x4EE3;&#x8868;&#x4E86; &quot;$1&quot; &quot;$2&quot; &quot;$3&quot;....&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<h1 id="&#x689D;&#x4EF6;&#x5224;&#x65B7;">&#x689D;&#x4EF6;&#x5224;&#x65B7;</h1>
+<p>&#x904B;&#x7B97;&#x5143;&#xFF1A;test  &#x6216; [ condition ]&#x3002; &#x6CE8;&#x610F; [ ] &#x4E2D;&#x7684;&#x7A7A;&#x767D;&#x9593;&#x9694;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>&#x5224;&#x65B7;&#x53E5;</th>
+<th style="text-align:left">&#x8AAA;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-n str1</code></td>
+<td style="text-align:left">&#x5B57;&#x4E32; str1 &#x7684;&#x9577;&#x5EA6;&#x5927;&#x65BC; 0 &#x5247;&#x50B3;&#x56DE; true&#x3002;</td>
+</tr>
+<tr>
+<td><code>-z str1</code></td>
+<td style="text-align:left">&#x5B57;&#x4E32; str1 &#x7684;&#x9577;&#x5EA6;&#x7B49;&#x65BC; 0 &#x5247;&#x50B3;&#x56DE; true&#x3002;</td>
+</tr>
+<tr>
+<td><code>str1</code></td>
+<td style="text-align:left">&#x5B57;&#x4E32; str1 &#x4E0D;&#x662F; null &#x5247;&#x50B3;&#x56DE; true&#x3002;</td>
+</tr>
+<tr>
+<td><code>str1 = str2</code></td>
+<td style="text-align:left">str1 &#x7B49;&#x65BC; str2 &#x5247;&#x50B3;&#x56DE; true&#x3002;&#x7B49;&#x865F;&#x4E8C;&#x908A;&#x6709;&#x7A7A;&#x767D;&#x3002;</td>
+</tr>
+<tr>
+<td><code>str1 != str2</code></td>
+<td style="text-align:left">str1 &#x4E0D;&#x7B49;&#x65BC; str2 &#x5247;&#x50B3;&#x56DE; true&#x3002;!= &#x7684;&#x4E8C;&#x908A;&#x6709;&#x7A7A;&#x767D;&#x3002;</td>
+</tr>
+<tr>
+<td><code>a -eq b</code></td>
+<td style="text-align:left">Equal&#xFF0C;&#x7B49;&#x65BC;&#x3002;a &#x7B49;&#x65BC; b &#x5247;&#x50B3;&#x56DE;&#x771F; (true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>a -ne b</code></td>
+<td style="text-align:left">Not equal&#xFF0C;&#x4E0D;&#x7B49;&#x65BC;&#x3002;a &#x4E0D;&#x7B49;&#x65BC; b &#x5247;&#x50B3;&#x56DE;&#x771F; (true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>a -gt b</code></td>
+<td style="text-align:left">Greater than&#xFF0C;&#x5927;&#x65BC;&#x3002;a &#x5927;&#x65BC; b &#x5247;&#x50B3;&#x56DE;&#x771F; (true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>a -lt b</code></td>
+<td style="text-align:left">Less Than&#xFF0C;&#x5C0F;&#x65BC;&#x3002;a &#x5C0F;&#x65BC; b &#x5247;&#x50B3;&#x56DE;&#x771F; (true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>a -ge b</code></td>
+<td style="text-align:left">Greater or equal&#xFF0C;&#x5927;&#x65BC;&#x6216;&#x7B49;&#x65BC;&#x3002;a &#x5927;&#x65BC;&#x6216;&#x7B49;&#x65BC; b &#x5247;&#x50B3;&#x56DE;&#x771F; (true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>a -le b</code></td>
+<td style="text-align:left">Less or equal&#xFF0C;&#x5C0F;&#x65BC;&#x6216;&#x7B49;&#x65BC;&#x3002;a &#x5C0F;&#x65BC;&#x6216;&#x7B49;&#x65BC; b &#x5247;&#x50B3;&#x56DE;&#x771F; (true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-e file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x5982;&#x5B58;&#x5728;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-d file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x70BA;&#x76EE;&#x9304;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-f file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x662F;&#x4E00;&#x822C;&#x7684;&#x6A94;&#x6848;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)</td>
+</tr>
+<tr>
+<td><code>-L file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x662F;&#x9023;&#x7D50;&#x6A94;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-u file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x7684; SUID &#x5DF1;&#x8A2D;&#x5B9A;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-g file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x7684; SGID &#x5DF1;&#x8A2D;&#x5B9A;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-s file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x7684;&#x6A94;&#x6848;&#x9577;&#x5EA6;&#x5927;&#x65BC; 0 &#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-z file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x7684;&#x6A94;&#x6848;&#x9577;&#x5EA6;&#x7B49;&#x65BC; 0 &#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-r file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x53EF;&#x4EE5;&#x8B80;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-w file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x53EF;&#x4EE5;&#x5BEB;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+<tr>
+<td><code>-x file</code></td>
+<td style="text-align:left">&#x6AA2;&#x67E5; file &#x53EF;&#x4EE5;&#x57F7;&#x884C;&#x5247;&#x50B3;&#x56DE;&#x771F;(true)&#x3002;</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+            <a href="/tags/shell/" rel="tag">#shell</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/15/import-ssl-ca-into-keystore/" rel="next" title="如何把ssl 憑證匯入Java Keystore">
+                <i class="fa fa-chevron-left"></i> 如何把ssl 憑證匯入Java Keystore
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
+               alt="Lawrence Lin" />
+          <p class="site-author-name" itemprop="name">Lawrence Lin</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本語法"><span class="nav-number">2.</span> <span class="nav-text">基本語法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#if-then-述句"><span class="nav-number">2.1.</span> <span class="nav-text">if ... then 述句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while-及-until-述句"><span class="nav-number">2.2.</span> <span class="nav-text">while 及 until 述句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-迴圈"><span class="nav-number">2.3.</span> <span class="nav-text">for 迴圈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-判斷"><span class="nav-number">2.4.</span> <span class="nav-text">case 判斷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function"><span class="nav-number">2.5.</span> <span class="nav-text">function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#開頭的內隱變數"><span class="nav-number">3.</span> <span class="nav-text">$ 開頭的內隱變數</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#條件判斷"><span class="nav-number">4.</span> <span class="nav-text">條件判斷</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'fivewillow';
+      var disqus_identifier = '2016/05/13/shell-script-notes/';
+      var disqus_title = 'Linux Shell Script 的筆記';
+      var disqus_url = 'http://www.lawrencelin.info/2016/05/13/shell-script-notes/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
