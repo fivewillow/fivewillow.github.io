@@ -1,0 +1,663 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,lambda,functional programming," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="自從Java8 引入函數化的語法(Lambda) 以來, 就有一些的程式語彙是以前未曾注意到, 但是在看函數化相關的文章時又常被提起,而一級函數(First-class Function) 就是一例.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="First Class Function in Java8">
+<meta property="og:url" content="www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/index.html">
+<meta property="og:site_name" content="Lawrence's note">
+<meta property="og:description" content="自從Java8 引入函數化的語法(Lambda) 以來, 就有一些的程式語彙是以前未曾注意到, 但是在看函數化相關的文章時又常被提起,而一級函數(First-class Function) 就是一例.">
+<meta property="og:updated_time" content="2016-11-21T16:40:09.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="First Class Function in Java8">
+<meta name="twitter:description" content="自從Java8 引入函數化的語法(Lambda) 以來, 就有一些的程式語彙是以前未曾注意到, 但是在看函數化相關的文章時又常被提起,而一級函數(First-class Function) 就是一例.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/"/>
+
+
+  <title> First Class Function in Java8 | Lawrence's note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-tw">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-44038136-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Lawrence's note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                First Class Function in Java8
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-11-22T00:17:01+08:00" content="2016-11-22">
+              2016-11-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/First-Class-Function-in-Java8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/First-Class-Function-in-Java8/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h1>
+<p>&#x81EA;&#x5F9E;Java8 &#x5F15;&#x5165;&#x51FD;&#x6578;&#x5F0F;&#x7A0B;&#x5F0F;&#x8A2D;&#x8A08;&#x7684;&#x8A9E;&#x6CD5;&#x4EE5;&#x4F86;, &#x5C31;&#x6709;&#x4E00;&#x4E9B;&#x76F8;&#x95DC;&#x7684;&#x7A0B;&#x5F0F;&#x8A9E;&#x5F59;&#x662F;&#x4EE5;&#x524D;&#x672A;&#x66FE;&#x6CE8;&#x610F;&#x5230;, &#x4F46;&#x662F;&#x5728;&#x770B;&#x51FD;&#x6578;&#x5F0F;&#x7A0B;&#x5F0F;&#x8A2D;&#x8A08;&#x7684;&#x6587;&#x7AE0;&#x6642;&#x53C8;&#x5E38;&#x88AB;&#x63D0;&#x8D77;.
+&#x800C;&#x4E00;&#x7D1A;&#x51FD;&#x6578;(First-class Function) &#x5C31;&#x662F;&#x5176;&#x4E2D;&#x4E00;&#x500B;&#x4F8B;&#x5B50;.</p>
+<h1 id="&#x4E00;&#x7B49;&#x516C;&#x6C11;first-class-citizen">&#x4E00;&#x7B49;&#x516C;&#x6C11;(First-class citizen)</h1>
+<p>&#x5728;&#x6211;&#x5011;&#x8A0E;&#x8AD6;&#x4E00;&#x7D1A;&#x51FD;&#x6578;&#x4E4B;&#x524D;, &#x6211;&#x5011;&#x5148;&#x8981;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#x53E6;&#x4E00;&#x500B;&#x540D;&#x8A5E;&#x4E00;&#x7B49;&#x516C;&#x6C11;(First-class citizen)
+&#x6309;&#x7167; wiki&#x7684;&#x89E3;&#x91CB;:
+<a href="https://en.wikipedia.org/wiki/First-class_citizen" title="First-class_citizen" target="_blank" rel="external">wiki : First-class_citizen</a></p>
+<blockquote>
+<p>In programming language design, a first-class citizen (also type, object, entity, or value) in a given programming language is an entity which supports all the operations generally available to other entities. These operations typically include being passed as an argument, returned from a function, and assigned to a variable.</p>
+</blockquote>
+<p>&#x4E00;&#x500B;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x5177;&#x6709;&#x4EE5;&#x4E0B;&#x4E3B;&#x8981;&#x7279;&#x5FB5;:</p>
+<ul>
+<li>&#x53EF;&#x4EE5;&#x88AB;&#x7576;&#x4F5C;&#x662F;&#x53C3;&#x6578;&#x50B3;&#x905E;.</li>
+<li>&#x53EF;&#x4EE5;&#x88AB;&#x7576;&#x6210;&#x56DE;&#x50B3;&#x503C;.</li>
+<li>&#x53EF;&#x4EE5;&#x88AB;&#x6307;&#x6D3E;&#x70BA;&#x4E00;&#x500B;&#x8B8A;&#x6578;.</li>
+</ul>
+<p>&#x800C;&#x4E00;&#x7D1A;&#x51FD;&#x6578;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x7684;&#x4E00;&#x5206;&#x5B50;&#x4E5F;&#x540C;&#x6A23;&#x5177;&#x6709;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x7684;&#x7279;&#x5FB5;,&#x4E5F;&#x5C31;&#x662F;&#x6307;&#x51FD;&#x6578;&#x53EF;&#x4EE5;&#x88AB;&#x7576;&#x4F5C;&#x53C3;&#x6578;&#x50B3;&#x905E;, &#x56DE;&#x50B3;&#x503C;&#x6216;&#x6307;&#x6D3E;&#x7D66;&#x4E00;&#x500B;&#x8B8A;&#x6578;.
+&#x4EE5;&#x4E0B;&#x6211;&#x5011;&#x5C31;&#x4EE5;java8 &#x7684;&#x8A9E;&#x6CD5;&#x4F86;&#x8AAA;&#x660E; First Class Function &#x7684;&#x4E00;&#x4E9B;&#x7279;&#x6027;:</p>
+<h1 id="&#x9AD8;&#x968E;&#x51FD;&#x6578;-high-order-function">&#x9AD8;&#x968E;&#x51FD;&#x6578; (High Order Function)</h1>
+<p>&#x9AD8;&#x968E;&#x51FD;&#x6578;&#x7684;&#x5B9A;&#x7FA9;&#x662F;&#x51FD;&#x6578;&#x53EF;&#x4EE5;&#x4F5C;&#x70BA;&#x53C3;&#x6578;&#x7684;&#x50B3;&#x905E;&#x4E5F;&#x53EF;&#x4EE5;&#x56DE;&#x50B3;&#x51FD;&#x6578;&#x7576;&#x4F5C;&#x50B3;&#x56DE;&#x503C;.</p>
+<p>&#x53C3;&#x6578;&#x7684;&#x50B3;&#x905E;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;Function&lt;Integer,Integer&gt;,Integer&gt; doAt5 = x -&gt; x.apply(<span class="number">5</span>);</span><br><span class="line">doAt5.apply(x -&gt; x + <span class="number">5</span>  ); <span class="comment">// return 8</span></span><br></pre></td></tr></table></figure></p>
+<p>&#x56DE;&#x50B3;&#x51FD;&#x6578;&#x7576;&#x4F5C;&#x50B3;&#x56DE;&#x503C;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;Double,Function&lt;Double,Double&gt;&gt; generatePow = b -&gt; a -&gt; Math.pow(a,b);</span><br><span class="line">Function&lt;Double, Double&gt; square = generatePow.apply(<span class="number">2.0</span>);</span><br><span class="line">Function&lt;Double, Double&gt; cube = generatePow.apply(<span class="number">3.0</span>);</span><br><span class="line">square.apply(<span class="number">2.0</span>); <span class="comment">//return 4</span></span><br><span class="line">dude.apply(<span class="number">2.0</span>); <span class="comment">// return 8</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="&#x533F;&#x540D;&#x51FD;&#x6578;-anonymous-functionlambda">&#x533F;&#x540D;&#x51FD;&#x6578; (Anonymous Function/Lambda)</h1>
+<p>Java &#x672C;&#x8EAB;&#x5C31;&#x6709;&#x63D0;&#x4F9B; &#x533F;&#x540D;&#x5167;&#x90E8;&#x985E;&#x5225;&#xFF08;Anonymous inner class), &#x4F46;&#x5728;Java8, &#x5247;&#x53E6;&#x5916;&#x63D0;&#x4F9B; lambda&#x7684;&#x8A9E;&#x6CD5;, &#x4F7F;&#x958B;&#x767C;&#x8005;&#x53EF;&#x4EE5;&#x7528;&#x66F4;&#x8CBC;&#x8FD1;&#x51FD;&#x6578;&#x7684;&#x89D2;&#x5EA6;&#x4F86;&#x601D;&#x8003;&#x554F;&#x984C;.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// using anonymous class</span></span><br><span class="line">Runnable runnbale = <span class="keyword">new</span> Runnable() {</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{</span><br><span class="line">        System.out.println(<span class="string">&quot;Hi Anonymous Function!&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// using lambda expressions, after idk 1.8</span></span><br><span class="line">Runnable runnbale = () -&gt; System.out.println(<span class="string">&quot;Hi Anonymous Function!&quot;</span>);</span><br></pre></td></tr></table></figure></p>
+<h1 id="&#x67EF;&#x91CC;&#x5316;-currying">&#x67EF;&#x91CC;&#x5316; (Currying)</h1>
+<p>&#x67EF;&#x91CC;&#x5316;&#x662F;&#x6307;&#x628A;&#x4E00;&#x500B;&#x591A;&#x53C3;&#x6578;&#x7684;&#x51FD;&#x6578;&#x8F49;&#x63DB;&#x6210;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x55AE;&#x53C3;&#x6578;&#x51FD;&#x6578;.&#x9019;&#x662F;&#x4E00;&#x7A2E;&#x4F7F;&#x7528;&#x55AE;&#x53C3;&#x6578;&#x51FD;&#x6578;&#x53BB;&#x6478;&#x64EC;&#x591A;&#x53C3;&#x6578;&#x51FD;&#x6578;&#x7684;&#x4E00;&#x7A2E;&#x65B9;&#x6CD5;.
+&#x5047;&#x8A2D;&#x6709;&#x4E00;&#x500B;&#x51FD;&#x6578;&#x70BA; f(a, b) = a + b, &#x7D93;&#x904E; currying &#x5C31;&#x53EF;&#x4EE5;&#x8B8A;&#x6210; f(a)(b)</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;Integer,Function&lt;Integer,Integer&gt;&gt; add = a -&gt; b -&gt; a + b;</span><br><span class="line"></span><br><span class="line">Function&lt;Integer, Integer&gt; plus2 = add.apply(<span class="number">2</span>);</span><br><span class="line">Function&lt;Integer, Integer&gt; plus3 = add.apply(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">plus2.andThen(plus3).apply(<span class="number">1</span>); <span class="comment">// it equals 1+2+3 and returns 6.</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/lambda/" rel="tag">#lambda</a>
+          
+            <a href="/tags/functional-programming/" rel="tag">#functional programming</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/shell-script-notes/" rel="next" title="Linux Shell Script 的筆記">
+                <i class="fa fa-chevron-left"></i> Linux Shell Script 的筆記
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
+               alt="Lawrence Lin" />
+          <p class="site-author-name" itemprop="name">Lawrence Lin</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一等公民first-class-citizen"><span class="nav-number">2.</span> <span class="nav-text">一等公民(First-class citizen)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高階函數-high-order-function"><span class="nav-number">3.</span> <span class="nav-text">高階函數 (High Order Function)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名函數-anonymous-functionlambda"><span class="nav-number">4.</span> <span class="nav-text">匿名函數 (Anonymous Function/Lambda)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#柯里化-currying"><span class="nav-number">5.</span> <span class="nav-text">柯里化 (Currying)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'fivewillow';
+      var disqus_identifier = '2016/11/First-Class-Function-in-Java8/';
+      var disqus_title = "First Class Function in Java8";
+      var disqus_url = 'www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
