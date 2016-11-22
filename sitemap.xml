@@ -2,17 +2,17 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <sitemap>
-        <loc>www.lawrencelin.info/post-sitemap.xml</loc>
+        <loc>http://www.lawrencelin.info/post-sitemap.xml</loc>
         <lastmod>2016-11-21T16:40:09.921Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>www.lawrencelin.info/page-sitemap.xml</loc>
+        <loc>http://www.lawrencelin.info/page-sitemap.xml</loc>
         <lastmod>2016-11-21T16:15:27.994Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>www.lawrencelin.info/tag-sitemap.xml</loc>
+        <loc>http://www.lawrencelin.info/tag-sitemap.xml</loc>
         <lastmod>2016-05-11T17:04:40.252Z</lastmod>
     </sitemap>
 
