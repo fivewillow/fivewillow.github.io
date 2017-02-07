@@ -5,10 +5,10 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next pisces use-motion" lang="zh-tw">
 <head>
   <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
@@ -29,9 +29,7 @@
 
   
   
-    
-  
-  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -57,7 +55,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Microsoft JhengHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -65,11 +63,9 @@
 
 
 
-  
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="ssh," />
@@ -81,29 +77,30 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
 
 
 
 
-<meta name="description" content="我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?SSH KEY 的交換就是其中的一種方式.">
+<meta name="description" content="前言我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?SSH KEY 的交換就是其中的一種方式.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSH Key的使用">
 <meta property="og:url" content="http://www.lawrencelin.info/2015/05/use-ssh-key/index.html">
 <meta property="og:site_name" content="Lawrence's note">
-<meta property="og:description" content="我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?SSH KEY 的交換就是其中的一種方式.">
-<meta property="og:updated_time" content="2016-05-11T17:04:40.252Z">
+<meta property="og:description" content="前言我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?SSH KEY 的交換就是其中的一種方式.">
+<meta property="og:updated_time" content="2017-02-07T16:55:22.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH Key的使用">
-<meta name="twitter:description" content="我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?SSH KEY 的交換就是其中的一種方式.">
+<meta name="twitter:description" content="前言我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?SSH KEY 的交換就是其中的一種方式.">
 
 
 
-<script type="text/javascript" id="hexo.configuration">
+<script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    root: '/',
     scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
@@ -111,20 +108,29 @@
     duoshuo: {
       userId: 'undefined',
       author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
     }
   };
 </script>
 
 
 
-
   <link rel="canonical" href="http://www.lawrencelin.info/2015/05/use-ssh-key/"/>
+
+
+
 
 
   <title> SSH Key的使用 | Lawrence's note </title>
 </head>
 
-<body itemscope itemtype="//schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
 
@@ -133,7 +139,7 @@
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js'','ga');
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-44038136-3', 'auto');
   ga('send', 'pageview');
 </script>
@@ -154,7 +160,7 @@
   <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-meta ">
   
 
@@ -165,7 +171,9 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+    
+      <p class="site-subtitle"></p>
+    
 </div>
 
 <div class="site-nav-toggle">
@@ -193,6 +201,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -212,16 +230,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            關於
-          </a>
-        </li>
-      
 
       
     </ul>
@@ -229,6 +237,8 @@
 
   
 </nav>
+
+
 
  </div>
     </header>
@@ -243,13 +253,26 @@
     
 
   
-  
 
   
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2015/05/use-ssh-key/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Lawrence Lin">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Lawrence's note">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Lawrence's note" src="">
+    </span>
+  </span>
 
     
       <header class="post-header">
@@ -268,13 +291,21 @@
 
         <div class="post-meta">
           <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2015-05-25T17:50:12+08:00" content="2015-05-25">
-              2015-05-25
-            </time>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-05-25T17:50:12+08:00">
+                2015-05-25
+              </time>
+            
+
+            
+
+            
           </span>
 
           
@@ -282,9 +313,12 @@
           
             
               <span class="post-comments-count">
-                &nbsp; | &nbsp;
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
                 <a href="/2015/05/use-ssh-key/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/use-ssh-key/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/use-ssh-key/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -296,6 +330,9 @@
           
 
           
+
+          
+
         </div>
       </header>
     
@@ -307,39 +344,22 @@
       
 
       
-        <h1 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h1>
-<p>&#x6211;&#x5011;&#x5E38;&#x4F7F;&#x7528; SSH &#x7684;&#x65B9;&#x5F0F;&#x767B;&#x5165; Linux&#x4E3B;&#x6A5F;, &#x4F46;&#x662F;&#x6BCF;&#x6B21;&#x767B;&#x5165;&#x6642;, &#x90FD;&#x8981;&#x6253;&#x5BC6;&#x78BC;, &#x6709;&#x6C92;&#x6709;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;&#x8F38;&#x5165;&#x5BC6;&#x78BC;&#x5C31;&#x53EF;&#x4EE5;&#x9032;&#x5165;&#x5462;?
-SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x7A2E;&#x65B9;&#x5F0F;.</p>
-<h1 id="&#x6B65;&#x9A5F;">&#x6B65;&#x9A5F;</h1>
-<h2 id="&#x9032;&#x5165;ssh&#x76EE;&#x9304;">&#x9032;&#x5165;ssh&#x76EE;&#x9304;</h2>
-<p>&#x9996;&#x5148;&#x5148;&#x5230;&#x500B;&#x4EBA;&#x7684; ssh&#x76EE;&#x9304;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br></pre></td></tr></table></figure></p>
-<p>&#x5982;&#x679C;&#x6C92;&#x6709;&#x9019;&#x500B;&#x76EE;&#x9304;, &#x9700;&#x624B;&#x52D5;&#x5EFA;&#x4E00;&#x500B;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir .ssh</span><br></pre></td></tr></table></figure></p>
-<h2 id="&#x5EFA;&#x7ACB;&#x65B0;&#x7684;-ssh-key">&#x5EFA;&#x7ACB;&#x65B0;&#x7684; SSH key</h2>
-<p>&#x7522;&#x751F;&#x4E00;&#x500B;&#x65B0;&#x7684;SSH key, &#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0B;&#x5217;&#x6307;&#x4EE4;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure></p>
-<p>&#x4F9D;&#x7167;&#x63D0;&#x793A;, &#x8F38;&#x5165;&#x4F60;&#x7684;&#x5BC6;&#x78BC;&#x5F8C;,&#x5C31;&#x53EF;&#x4EE5;&#x5728; <code>.ssh</code>&#x76EE;&#x9304;&#x4E0B;&#x770B;&#x5230; <code>id_rsa</code>&#x53CA;<code>id_rsa.pub</code>,&#x9019;&#x4E8C;&#x500B;&#x6A94;.<code>id_rsa.pub</code> &#x5C31;&#x662F;&#x516C;&#x9470;, <code>id_rsa</code> &#x5247;&#x662F;&#x79C1;&#x9470;</p>
-<h2 id="&#x5C07;&#x516C;&#x9470;&#x653E;&#x5165;&#x4E3B;&#x6A5F;">&#x5C07;&#x516C;&#x9470;&#x653E;&#x5165;&#x4E3B;&#x6A5F;</h2>
-<p>&#x5148;&#x628A;&#x516C;&#x9470;&#x653E;&#x5230;&#x4E3B;&#x6A5F;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp ~/.ssh/*.pub [&#x76EE;&#x7684;&#x4E3B;&#x6A5F;]:~/.ssh/.</span><br></pre></td></tr></table></figure></p>
-<p>&#x767B;&#x5165;&#x4E3B;&#x6A5F;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [username]@[&#x76EE;&#x7684;&#x4E3B;&#x6A5F;]</span><br></pre></td></tr></table></figure></p>
-<p>&#x628A;&#x516C;&#x9470;&#x5B58;&#x5230;&#x4E3B;&#x6A5F;. &#x7CFB;&#x7D71;&#x9810;&#x8A2D;&#x8655;&#x7406;&#x516C;&#x9470;&#x7684;&#x6A94;&#x6848;&#x70BA;<code>authorized_keys</code>,&#x9019;&#x500B;&#x6A94;&#x6848;&#x5FC5;&#x9808;&#x628A;&#x6B0A;&#x9650;&#x8A2D;&#x70BA;&#x53EA;&#x6709;&#x4F7F;&#x7528;&#x8005;&#x5177;&#x6709;&#x5BEB;&#x7684;&#x6B0A;&#x9650;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.ssh/identity.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">$ chmod 711 ~/.ssh</span><br><span class="line">$ chmod 644 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p>
-<h2 id="&#x8A2D;&#x5B9A;-ssh-agent">&#x8A2D;&#x5B9A; <code>ssh-agent</code></h2>
-<p>&#x8D77;&#x52D5; ssh-agent
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> `ssh-agent <span class="_">-s</span>`</span><br></pre></td></tr></table></figure></p>
-<p>&#x65B0;&#x589E; key
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add</span><br></pre></td></tr></table></figure></p>
-<h2 id="&#x81EA;&#x52D5;&#x5316;&#x57F7;&#x884C;">&#x81EA;&#x52D5;&#x5316;&#x57F7;&#x884C;</h2>
-<p>&#x53C3;&#x8003;<a href="http://www.cygwin.com/ml/cygwin/2001-06/msg00537.html" title="useful cygwin ssh-agent script" target="_blank" rel="external">Joseph M. Reagle Jr.</a></p>
-<p>&#x653E;&#x5728; .bash_profile &#x7684; script</p>
-<p>SH_ENV=&quot;$HOME/.ssh/environment&quot;</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">function</span> start_agent {</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Initialising new SSH agent...&quot;</span></span><br><span class="line">    /usr/bin/ssh-agent | sed <span class="string">&apos;s/^echo/#echo/&apos;</span> &gt; <span class="string">&quot;<span class="variable">${SSH_ENV}</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> succeeded</span><br><span class="line">    chmod 600 <span class="string">&quot;<span class="variable">${SSH_ENV}</span>&quot;</span></span><br><span class="line">    . <span class="string">&quot;<span class="variable">${SSH_ENV}</span>&quot;</span> &gt; /dev/null</span><br><span class="line"> /usr/bin/ssh-add;</span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> <span class="comment"># Source SSH settings, if applicable</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> [ <span class="_">-f</span> <span class="string">&quot;<span class="variable">${SSH_ENV}</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    . <span class="string">&quot;<span class="variable">${SSH_ENV}</span>&quot;</span> &gt; /dev/null</span><br><span class="line">    <span class="comment">#ps ${SSH_AGENT_PID} doesn&#x2019;t work under cywgin</span></span><br><span class="line">    ps -ef | grep <span class="variable">${SSH_AGENT_PID}</span> | grep ssh-agent$ &gt; /dev/null || {</span><br><span class="line">    start_agent;</span><br><span class="line">}</span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line">  start_agent;</span><br><span class="line"> <span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="&#x4F7F;&#x7528;-ssh-config-&#x4F86;&#x5C0D;&#x6620;&#x591A;&#x500B;ssh-&#x5E33;&#x865F;">&#x4F7F;&#x7528; ssh config &#x4F86;&#x5C0D;&#x6620;&#x591A;&#x500B;ssh &#x5E33;&#x865F;</h2>
-<p>&#x7DE8;&#x8F2F;<code>~/.ssh/config</code>, &#x5982;&#x679C;&#x6C92;&#x6709;&#x5C31;&#x5EFA;&#x4E00;&#x500B;. &#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x70BA;
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host <span class="string">[&#x540D;&#x7A31;]</span></span><br><span class="line">    HostName <span class="string">[&#x4E3B;&#x6A5F;&#x540D;]</span></span><br><span class="line">    User <span class="string">[&#x4F7F;&#x7528;&#x8005;&#x767B;&#x5165;ID]</span></span><br><span class="line">    IdentityFile <span class="string">[&#x79C1;&#x9470;&#x8DEF;&#x5F91;]</span></span><br></pre></td></tr></table></figure></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?<br>SSH KEY 的交換就是其中的一種方式.</p>
+<a id="more"></a>
+<h1 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h1><h2 id="進入ssh目錄"><a href="#進入ssh目錄" class="headerlink" title="進入ssh目錄"></a>進入ssh目錄</h2><p>首先先到個人的 ssh目錄<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br></pre></td></tr></table></figure></p>
+<p>如果沒有這個目錄, 需手動建一個<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir .ssh</span><br></pre></td></tr></table></figure></p>
+<h2 id="建立新的-ssh-key"><a href="#建立新的-SSH-key" class="headerlink" title="建立新的 SSH key"></a>建立新的 SSH key</h2><p>產生一個新的SSH key, 可以使用下列指令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure></p>
+<p>依照提示, 輸入你的密碼後,就可以在 <code>.ssh</code>目錄下看到 <code>id_rsa</code>及<code>id_rsa.pub</code>,這二個檔.<code>id_rsa.pub</code> 就是公鑰, <code>id_rsa</code> 則是私鑰</p>
+<h2 id="將公鑰放入主機"><a href="#將公鑰放入主機" class="headerlink" title="將公鑰放入主機"></a>將公鑰放入主機</h2><p>先把公鑰放到主機<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp ~/.ssh/*.pub [目的主機]:~/.ssh/.</span><br></pre></td></tr></table></figure></p>
+<p>登入主機<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [username]@[目的主機]</span><br></pre></td></tr></table></figure></p>
+<p>把公鑰存到主機. 系統預設處理公鑰的檔案為<code>authorized_keys</code>,這個檔案必須把權限設為只有使用者具有寫的權限<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.ssh/identity.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">$ chmod 711 ~/.ssh</span><br><span class="line">$ chmod 644 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p>
+<h2 id="設定-ssh-agent"><a href="#設定-ssh-agent" class="headerlink" title="設定 ssh-agent"></a>設定 <code>ssh-agent</code></h2><p>起動 ssh-agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> `ssh-agent <span class="_">-s</span>`</span><br></pre></td></tr></table></figure></p>
+<p>新增 key<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add</span><br></pre></td></tr></table></figure></p>
+<h2 id="自動化執行"><a href="#自動化執行" class="headerlink" title="自動化執行"></a>自動化執行</h2><p>參考<a href="http://www.cygwin.com/ml/cygwin/2001-06/msg00537.html" title="useful cygwin ssh-agent script" target="_blank" rel="external">Joseph M. Reagle Jr.</a></p>
+<p>放在 .bash_profile 的 script</p>
+<p>SH_ENV=”$HOME/.ssh/environment”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> function start_agent &#123;</span><br><span class="line">    echo &quot;Initialising new SSH agent...&quot;</span><br><span class="line">    /usr/bin/ssh-agent | sed &apos;s/^echo/#echo/&apos; &gt; &quot;$&#123;SSH_ENV&#125;&quot;</span><br><span class="line">    echo succeeded</span><br><span class="line">    chmod 600 &quot;$&#123;SSH_ENV&#125;&quot;</span><br><span class="line">    . &quot;$&#123;SSH_ENV&#125;&quot; &gt; /dev/null</span><br><span class="line"> /usr/bin/ssh-add;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> # Source SSH settings, if applicable</span><br><span class="line"></span><br><span class="line"> if [ -f &quot;$&#123;SSH_ENV&#125;&quot; ]; then</span><br><span class="line">    . &quot;$&#123;SSH_ENV&#125;&quot; &gt; /dev/null</span><br><span class="line">    #ps $&#123;SSH_AGENT_PID&#125; doesn’t work under cywgin</span><br><span class="line">    ps -ef | grep $&#123;SSH_AGENT_PID&#125; | grep ssh-agent$ &gt; /dev/null || &#123;</span><br><span class="line">    start_agent;</span><br><span class="line">&#125;</span><br><span class="line"> else</span><br><span class="line">  start_agent;</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+<h2 id="使用-ssh-config-來對映多個ssh-帳號"><a href="#使用-ssh-config-來對映多個ssh-帳號" class="headerlink" title="使用 ssh config 來對映多個ssh 帳號"></a>使用 ssh config 來對映多個ssh 帳號</h2><p>編輯<code>~/.ssh/config</code>, 如果沒有就建一個. 文件格式為<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host [名稱]</span><br><span class="line">    HostName [主機名]</span><br><span class="line">    User [使用者登入ID]</span><br><span class="line">    IdentityFile [私鑰路徑]</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -357,12 +377,13 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
 
       
     </div>
+
 
     <footer class="post-footer">
       
         <div class="post-tags">
           
-            <a href="/tags/ssh/" rel="tag">#ssh</a>
+            <a href="/tags/ssh/" rel="tag"># ssh</a>
           
         </div>
       
@@ -372,6 +393,8 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
           <div class="post-nav-next post-nav-item">
             
           </div>
+
+          <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
@@ -395,7 +418,7 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
     </div>
   </div>
 
-
+          
           </div>
           
 
@@ -441,8 +464,8 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
         </ul>
       
 
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
                alt="Lawrence Lin" />
@@ -450,12 +473,15 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">4</span>
-              <span class="site-state-item-name">文章</span>
-            </a>
-          </div>
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
 
           
 
@@ -482,19 +508,27 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
         
         
 
+        
+
+
       </section>
 
       
+      <!--noindex-->
         <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
           <div class="post-toc">
+
             
               
             
+
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步驟"><span class="nav-number">2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#進入ssh目錄"><span class="nav-number">2.1.</span> <span class="nav-text">進入ssh目錄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立新的-ssh-key"><span class="nav-number">2.2.</span> <span class="nav-text">建立新的 SSH key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#將公鑰放入主機"><span class="nav-number">2.3.</span> <span class="nav-text">將公鑰放入主機</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定-ssh-agent"><span class="nav-number">2.4.</span> <span class="nav-text">設定 ssh-agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自動化執行"><span class="nav-number">2.5.</span> <span class="nav-text">自動化執行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-ssh-config-來對映多個ssh-帳號"><span class="nav-number">2.6.</span> <span class="nav-text">使用 ssh config 來對映多個ssh 帳號</span></a></li></ol></li></ol></div>
             
+
           </div>
         </section>
+      <!--/noindex-->
       
 
     </div>
@@ -510,12 +544,13 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
 </div>
+
 
 <div class="powered-by">
   由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動
@@ -527,6 +562,7 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
     NexT.Pisces
   </a>
 </div>
+
 
         
 
@@ -559,54 +595,55 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
 
 
 
-  
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
 
   
-  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
-
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
 
 
 
@@ -619,10 +656,11 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
     <script type="text/javascript">
       var disqus_shortname = 'fivewillow';
       var disqus_identifier = '2015/05/use-ssh-key/';
-      var disqus_title = "SSH Key的使用";
-      var disqus_url = 'http://www.lawrencelin.info/2015/05/use-ssh-key/';
 
-      function run_disqus_script(disqus_script){
+      var disqus_title = "SSH Key的使用";
+
+
+      function run_disqus_script(disqus_script) {
         var dsq = document.createElement('script');
         dsq.type = 'text/javascript';
         dsq.async = true;
@@ -631,6 +669,7 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
       }
 
       run_disqus_script('count.js');
+
       
         var disqus_config = function () {
             this.page.url = disqus_url;
@@ -639,8 +678,14 @@ SSH KEY &#x7684;&#x4EA4;&#x63DB;&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x4E00;
         };
         run_disqus_script('embed.js');
       
+
     </script>
   
+
+
+
+
+
 
 
 
