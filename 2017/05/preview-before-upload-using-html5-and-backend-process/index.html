@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-tw">
+<html class="theme-next gemini use-motion" lang="zh-tw">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -18,6 +22,7 @@
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -45,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="php,html5,mysql," />
@@ -57,19 +77,16 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
 
 
 <meta name="description" content="傳統的的圖片上傳方式， 通常是需要把圖片上傳到後端的伺服器。從伺服器取得圖片的URL之後，再放入 img 元素中，來顯示圖片的預覽。不過在 HTML5之下，我們可以不用上傳到後端伺端器就可以實現圖片的預覽。 HTML5有提供一個新的物件 FileReader， 可以讓我們直接從頁面中讀取文件。">
+<meta name="keywords" content="php,html5,mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何將圖片預覽上傳及儲存在資料庫中">
 <meta property="og:url" content="http://www.lawrencelin.info/2017/05/preview-before-upload-using-html5-and-backend-process/index.html">
-<meta property="og:site_name" content="Lawrence's note">
+<meta property="og:site_name" content="Lawrence&#39;s note">
 <meta property="og:description" content="傳統的的圖片上傳方式， 通常是需要把圖片上傳到後端的伺服器。從伺服器取得圖片的URL之後，再放入 img 元素中，來顯示圖片的預覽。不過在 HTML5之下，我們可以不用上傳到後端伺端器就可以實現圖片的預覽。 HTML5有提供一個新的物件 FileReader， 可以讓我們直接從頁面中讀取文件。">
+<meta property="og:locale" content="zh-tw">
 <meta property="og:updated_time" content="2017-05-18T16:24:43.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何將圖片預覽上傳及儲存在資料庫中">
@@ -81,10 +98,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -108,10 +127,6 @@
 
 
   <title>如何將圖片預覽上傳及儲存在資料庫中 | Lawrence's note</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
-
   
 
 
@@ -130,18 +145,16 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -188,7 +201,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -197,22 +210,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            歸檔
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
           </a>
         </li>
       
@@ -244,7 +257,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/05/preview-before-upload-using-html5-and-backend-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -262,14 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                如何將圖片預覽上傳及儲存在資料庫中
-              
-            
-          </h2>
+          <h2 class="post-title" itemprop="name headline">如何將圖片預覽上傳及儲存在資料庫中</h2>
         
 
         <div class="post-meta">
@@ -321,6 +331,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -330,44 +343,40 @@
         <p>傳統的的圖片上傳方式， 通常是需要把圖片上傳到後端的伺服器。從伺服器取得圖片的URL之後，再放入 <code>img</code> 元素中，來顯示圖片的預覽。不過在 HTML5之下，我們可以不用上傳到後端伺端器就可以實現圖片的預覽。 HTML5有提供一個新的物件 <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader" target="_blank" rel="external">FileReader</a>， 可以讓我們直接從頁面中讀取文件。</p>
 <a id="more"></a>
 <p>我們在這要建立一個簡單的範例：在選擇一張圖檔後，在頁面上直接預覽。按下確定後，會把圖檔傳送到後端伺服器進行處理，然後再儲存至資料庫。</p>
-<h1 id="圖片預覽"><a href="#圖片預覽" class="headerlink" title="圖片預覽"></a>圖片預覽</h1><p>首先，我們先來了解 HTML5 FileReader 物件。FileReader 有提供以下幾個方法來存取檔案：</p>
+<h1 id="圖片預覽"><a class="markdownIt-Anchor" href="#圖片預覽"></a> 圖片預覽</h1>
+<p>首先，我們先來了解 HTML5 FileReader 物件。FileReader 有提供以下幾個方法來存取檔案：</p>
 <ul>
 <li>readAsArrayBuffer() - 將檔案以物件 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" target="_blank" rel="external">ArrayBuffer</a> 儲存在 <code>FileReader.result</code>.</li>
 <li>readAsDataURL() - 將檔案以DataURL 的格式儲存在 <code>FileReader.result</code>.</li>
 <li>readAsText() - 將檔案以文字的格式儲存在 <code>FileReader.result</code>.</li>
 </ul>
 <p>在圖片預覽中，我們會使用 <code>FileReader.readAsDataURL()</code>。 將圖片轉換成 <code>DataURL</code> 的格式再放入 <code>img</code> 的屬性 <code>src</code>。</p>
-<h2 id="dataurl-的格式"><a href="#DataURL-的格式" class="headerlink" title="DataURL 的格式"></a>DataURL 的格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:[&lt;MIME類型&gt;][;charset=&lt;charset&gt;][;編碼方法],&lt;編碼資料&gt;</span><br></pre></td></tr></table></figure>
-<p>在這裡編碼方法為 <code>Base64</code>。一個DataURL的範例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:image/png;base64,iVBORw0KGgoAAAANSUhEU…..dAAAAAElFTkSuQmCC</span><br></pre></td></tr></table></figure></p>
-<p>接下來是我們的程式碼：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Image Preview Upload<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"image_proc.php"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"imagestring"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">accept</span>=<span class="string">"image/*"</span> <span class="attr">id</span>=<span class="string">"previewImage"</span> <span class="attr">type</span>=<span class="string">"file"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">id</span>=<span class="string">"submit"</span>  /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show_image"</span> <span class="attr">src</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span><br><span class="line"></span><br><span class="line">var imageProc = function (input) &#123;</span><br><span class="line"> if (input.files &amp;&amp; input.files[0]) &#123;</span><br><span class="line">  // 建立一個 FileReader 物件</span><br><span class="line">   var reader = new FileReader();</span><br><span class="line"></span><br><span class="line">  // 當檔案讀取完後，所要進行的動作</span><br><span class="line">  reader.onload = function (e) &#123;</span><br><span class="line">    // 顯示圖片</span><br><span class="line">     $('#show_image').attr("src", e.target.result).css("height", "500px").css("width", "500px");</span><br><span class="line">    // 將 DataURL 放到表單中</span><br><span class="line">    $("input[name='imagestring']").val(e.target.result);</span><br><span class="line">   &#125;;</span><br><span class="line">  reader.readAsDataURL(input.files[0]);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$(document).ready(function() &#123;</span><br><span class="line">// 綁定事件</span><br><span class="line"> $("#previewImage").change(function () &#123;</span><br><span class="line">   readImage(this);</span><br><span class="line"> &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="資料庫的儲存"><a href="#資料庫的儲存" class="headerlink" title="資料庫的儲存"></a>資料庫的儲存</h1><p>在這個範例中，我們使用 MYSQL 資料庫，而儲存圖片的資料型態，則是使用 <code>BLOG</code>。</p>
-<p>以下為資料庫的 <code>schema</code><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> preview_image (</span><br><span class="line">   <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">   image <span class="built_in">blob</span>,</span><br><span class="line">   PRIMARY <span class="keyword">KEY</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
-<h1 id="後端伺服器的處理"><a href="#後端伺服器的處理" class="headerlink" title="後端伺服器的處理"></a>後端伺服器的處理</h1><p>在這個範例中，我們使用 PHP 作為後端伺服器的處理。它會接收前端傳來的表單，並把圖片儲存進入資料庫中。</p>
-<p>我們直接來看程式：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立資料庫連線</span></span><br><span class="line">$conn = mysqli_connect($db_host,$db_user,$db_passwd,$db_name);</span><br><span class="line">mysqli_set_charset($cc,<span class="string">"utf8"</span>);</span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_errno($conn)) &#123;</span><br><span class="line"> <span class="keyword">echo</span> mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接收前端傳來的 DataURL 字串</span></span><br><span class="line">$imagestring = trim($_REQUEST[<span class="string">"imagestring"</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析 DataURL</span></span><br><span class="line">$token = explode(<span class="string">','</span>, $bank_image);</span><br><span class="line"><span class="comment">// 取出圖片的資料並將 base64 還原成二進位格式</span></span><br><span class="line">$image = base64_decode($token[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下為 PHP 將 Blob 放入Mysql的方法</span></span><br><span class="line">$null = <span class="keyword">NULL</span>;</span><br><span class="line">$sql = <span class="string">'insert into preview_image(image) values(?)'</span>;</span><br><span class="line">$stmt = mysqli_prepare($conn, $sql);</span><br><span class="line">$stmt-&gt;bind_param(<span class="string">'b'</span>, $null);</span><br><span class="line">$stmt-&gt;send_long_data(<span class="number">0</span>, $image);</span><br><span class="line">$success = $stmt-&gt;execute();</span><br><span class="line">$stmt-&gt;close();</span><br></pre></td></tr></table></figure></p>
+<h2 id="dataurl-的格式"><a class="markdownIt-Anchor" href="#dataurl-的格式"></a> DataURL 的格式</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">data:[&lt;MIME類型&gt;][;charset=&lt;charset&gt;][;編碼方法],&lt;編碼資料&gt;</div></pre></td></tr></table></figure>
+<p>在這裡編碼方法為 <code>Base64</code>。一個DataURL的範例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">data:image/png;base64,iVBORw0KGgoAAAANSUhEU…..dAAAAAElFTkSuQmCC</div></pre></td></tr></table></figure>
+<p>接下來是我們的程式碼：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Image Preview Upload<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"image_proc.php"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"imagestring"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">accept</span>=<span class="string">"image/*"</span> <span class="attr">id</span>=<span class="string">"previewImage"</span> <span class="attr">type</span>=<span class="string">"file"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">id</span>=<span class="string">"submit"</span>  /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show_image"</span> <span class="attr">src</span>=<span class="string">""</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">var imageProc = function (input) &#123;</span></div><div class="line"><span class="undefined"> if (input.files &amp;&amp; input.files[0]) &#123;</span></div><div class="line"><span class="undefined">  // 建立一個 FileReader 物件</span></div><div class="line"><span class="undefined">   var reader = new FileReader();</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">  // 當檔案讀取完後，所要進行的動作</span></div><div class="line"><span class="undefined">  reader.onload = function (e) &#123;</span></div><div class="line"><span class="undefined">    // 顯示圖片</span></div><div class="line"><span class="undefined">     $('#show_image').attr("src", e.target.result).css("height", "500px").css("width", "500px");</span></div><div class="line"><span class="undefined">    // 將 DataURL 放到表單中</span></div><div class="line"><span class="undefined">    $("input[name='imagestring']").val(e.target.result);</span></div><div class="line"><span class="undefined">   &#125;;</span></div><div class="line"><span class="undefined">  reader.readAsDataURL(input.files[0]);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined"> &#125;</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">$(document).ready(function() &#123;</span></div><div class="line"><span class="undefined">// 綁定事件</span></div><div class="line"><span class="undefined"> $("#previewImage").change(function () &#123;</span></div><div class="line"><span class="undefined">   readImage(this);</span></div><div class="line"><span class="undefined"> &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">&#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<h1 id="資料庫的儲存"><a class="markdownIt-Anchor" href="#資料庫的儲存"></a> 資料庫的儲存</h1>
+<p>在這個範例中，我們使用 MYSQL 資料庫，而儲存圖片的資料型態，則是使用 <code>BLOG</code>。</p>
+<p>以下為資料庫的 <code>schema</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> preview_image (</div><div class="line">   <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">   image <span class="built_in">blob</span>,</div><div class="line">   PRIMARY <span class="keyword">KEY</span>(<span class="keyword">id</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<h1 id="後端伺服器的處理"><a class="markdownIt-Anchor" href="#後端伺服器的處理"></a> 後端伺服器的處理</h1>
+<p>在這個範例中，我們使用 PHP 作為後端伺服器的處理。它會接收前端傳來的表單，並把圖片儲存進入資料庫中。</p>
+<p>我們直接來看程式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 建立資料庫連線</span></div><div class="line">$conn = mysqli_connect($db_host,$db_user,$db_passwd,$db_name);</div><div class="line">mysqli_set_charset($cc,<span class="string">"utf8"</span>);</div><div class="line"><span class="keyword">if</span> (mysqli_connect_errno($conn)) &#123;</div><div class="line"> <span class="keyword">echo</span> mysqli_connect_error();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 接收前端傳來的 DataURL 字串</span></div><div class="line">$imagestring = trim($_REQUEST[<span class="string">"imagestring"</span>]);</div><div class="line"></div><div class="line"><span class="comment">// 解析 DataURL</span></div><div class="line">$token = explode(<span class="string">','</span>, $bank_image);</div><div class="line"><span class="comment">// 取出圖片的資料並將 base64 還原成二進位格式</span></div><div class="line">$image = base64_decode($token[<span class="number">1</span>]);</div><div class="line"></div><div class="line"><span class="comment">// 以下為 PHP 將 Blob 放入Mysql的方法</span></div><div class="line">$null = <span class="keyword">NULL</span>;</div><div class="line">$sql = <span class="string">'insert into preview_image(image) values(?)'</span>;</div><div class="line">$stmt = mysqli_prepare($conn, $sql);</div><div class="line">$stmt-&gt;bind_param(<span class="string">'b'</span>, $null);</div><div class="line">$stmt-&gt;send_long_data(<span class="number">0</span>, $image);</div><div class="line">$success = $stmt-&gt;execute();</div><div class="line">$stmt-&gt;close();</div></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -383,7 +392,7 @@
       
 
       
-        
+      
       
 
       
@@ -400,6 +409,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/11/spark-standalone-in-windows7/" rel="prev" title="在 windows 安裝 Spark Standalone">
+                在 windows 安裝 Spark Standalone <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -407,6 +420,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -422,16 +439,19 @@
 
 
           
-  <div class="comments" id="comments">
-    
+
+  
+    <div class="comments" id="comments">
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
           <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
         </noscript>
       </div>
-    
-  </div>
+    </div>
+
+  
+
 
 
         </div>
@@ -447,72 +467,77 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目錄
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             本站概覽
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
-               alt="Lawrence Lin" />
-          <p class="site-author-name" itemprop="name">Lawrence Lin</p>
-           
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
+                alt="Lawrence Lin" />
+            
+              <p class="site-author-name" itemprop="name">Lawrence Lin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
+          </div>
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">7</span>
-                <span class="site-state-item-name">文章</span>
-              </a>
-            </div>
-          
+          <nav class="site-state motion-element">
 
-          
-
-          
             
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
             
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">標籤</span>
-              </a>
-            </div>
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
 
-        </nav>
+          <div class="links-of-author motion-element">
+            
+          </div>
 
-        
-
-        <div class="links-of-author motion-element">
           
+          
+
+          
+          
+
+          
+
         </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -525,7 +550,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#圖片預覽"><span class="nav-number">1.</span> <span class="nav-text">圖片預覽</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dataurl-的格式"><span class="nav-number">1.1.</span> <span class="nav-text">DataURL 的格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#資料庫的儲存"><span class="nav-number">2.</span> <span class="nav-text">資料庫的儲存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#後端伺服器的處理"><span class="nav-number">3.</span> <span class="nav-text">後端伺服器的處理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#圖片預覽"><span class="nav-number">1.</span> <span class="nav-text"> 圖片預覽</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dataurl-的格式"><span class="nav-number">1.1.</span> <span class="nav-text"> DataURL 的格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#資料庫的儲存"><span class="nav-number">2.</span> <span class="nav-text"> 資料庫的儲存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#後端伺服器的處理"><span class="nav-number">3.</span> <span class="nav-text"> 後端伺服器的處理</span></a></li></ol></div>
             
 
           </div>
@@ -545,30 +570,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
 
-<div class="theme-info">
-  主題 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -579,6 +610,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -613,53 +646,65 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -700,6 +745,10 @@
 
 
 
+
+
+
+
   
 
 
@@ -708,6 +757,11 @@
 
   
 
+  
+
+  
+
+  
   
 
   

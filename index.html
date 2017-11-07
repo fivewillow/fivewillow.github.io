@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-tw">
+<html class="theme-next gemini use-motion" lang="zh-tw">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -18,6 +22,7 @@
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -45,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="lawrence lin" />
@@ -57,22 +77,15 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
-
-
-
-
-<meta name="description">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Lawrence's note">
+<meta property="og:title" content="Lawrence&#39;s note">
 <meta property="og:url" content="http://www.lawrencelin.info/index.html">
-<meta property="og:site_name" content="Lawrence's note">
-<meta property="og:description">
+<meta property="og:site_name" content="Lawrence&#39;s note">
+<meta property="og:locale" content="zh-tw">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lawrence's note">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Lawrence&#39;s note">
 
 
 
@@ -80,10 +93,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -107,10 +122,6 @@
 
 
   <title>Lawrence's note</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
-
   
 
 
@@ -129,11 +140,9 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -141,8 +150,7 @@
   
 
   <div class="container sidebar-position-left 
-   page-home 
- ">
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -189,7 +197,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -198,22 +206,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            歸檔
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
           </a>
         </li>
       
@@ -245,7 +253,147 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lawrence Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lawrence's note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/spark-standalone-in-windows7/" itemprop="url">在 windows 安裝 Spark Standalone</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-04T00:35:11+08:00">
+                2017-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/spark-standalone-in-windows7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/spark-standalone-in-windows7/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>把 Spark 安裝在Windows 上，是一種非主流的作法，也不太建議用在正式環境上。不過有時就是想要建立一個小型的Spark cluster，來進行開發及測試又不想花時間安裝 VM，這時就會想如果能在Windows 運行那該有多好。</p>
+<p>當然，除了自己一步一腳印的自行安裝外，還有另一個簡單的作法是使用Docker，不過我還是喜歡自己動手去研究每個細節的踏實感。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/spark-standalone-in-windows7/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/05/preview-before-upload-using-html5-and-backend-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -264,16 +412,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/05/preview-before-upload-using-html5-and-backend-process/" itemprop="url">
-                  如何將圖片預覽上傳及儲存在資料庫中
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/05/preview-before-upload-using-html5-and-backend-process/" itemprop="url">如何將圖片預覽上傳及儲存在資料庫中</a></h2>
         
 
         <div class="post-meta">
@@ -325,6 +465,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -332,7 +475,7 @@
 
       
         
-          <p>傳統的的圖片上傳方式， 通常是需要把圖片上傳到後端的伺服器。從伺服器取得圖片的URL之後，再放入 <code>img</code> 元素中，來顯示圖片的預覽。不過在 HTML5之下，我們可以不用上傳到後端伺端器就可以實現圖片的預覽。 HTML5有提供一個新的物件 <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader">FileReader</a>， 可以讓我們直接從頁面中讀取文件。</p>
+          <p>傳統的的圖片上傳方式， 通常是需要把圖片上傳到後端的伺服器。從伺服器取得圖片的URL之後，再放入 <code>img</code> 元素中，來顯示圖片的預覽。不過在 HTML5之下，我們可以不用上傳到後端伺端器就可以實現圖片的預覽。 HTML5有提供一個新的物件 <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader" target="_blank" rel="external">FileReader</a>， 可以讓我們直接從頁面中讀取文件。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/preview-before-upload-using-html5-and-backend-process/#more" rel="contents">
@@ -343,18 +486,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -368,6 +508,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -380,7 +524,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/04/date-processing-in-programming-language/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -399,16 +547,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/04/date-processing-in-programming-language/" itemprop="url">
-                  日期時間的處理-程式語言
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/04/date-processing-in-programming-language/" itemprop="url">日期時間的處理-程式語言</a></h2>
         
 
         <div class="post-meta">
@@ -460,6 +600,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -478,18 +621,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -503,6 +643,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -515,7 +659,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/04/ansible-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -534,16 +682,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/04/ansible-notes/" itemprop="url">
-                  Ansible 筆記
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/04/ansible-notes/" itemprop="url">Ansible 筆記</a></h2>
         
 
         <div class="post-meta">
@@ -595,6 +735,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -602,7 +745,7 @@
 
       
         
-          <h1 id="關於-Ansible"><a href="#關於-Ansible" class="headerlink" title="關於 Ansible"></a>關於 Ansible</h1><p>Ansible 是屬於 <strong>push-based</strong> 的自動部署工具, 我們不需要在遠端機器上安裝任何 client 端的程式或是 agent, 只要確定好有安裝 python 2.6以上的版本就可以了. Ansible 主要是經由 SSH 來進行控制及設定遠端的機器, 經由這樣子的設計, 我們在使用 ansible 時, 所需要的前置作業就會少很多.</p>
+          <p>Ansible 是屬於 <strong>push-based</strong> 的自動部署工具, 我們不需要在遠端機器上安裝任何 client 端的程式或是 agent, 只要確定好有安裝 python 2.6以上的版本就可以了. Ansible 主要是經由 SSH 來進行控制及設定遠端的機器, 經由這樣子的設計, 我們在使用 ansible 時, 所需要的前置作業就會少很多.</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/ansible-notes/#more" rel="contents">
@@ -613,18 +756,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -638,6 +778,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -650,7 +794,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -669,16 +817,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/11/First-Class-Function-in-Java8/" itemprop="url">
-                  First Class Function in Java8
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2016/11/First-Class-Function-in-Java8/" itemprop="url">First Class Function in Java8</a></h2>
         
 
         <div class="post-meta">
@@ -730,6 +870,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -737,7 +880,7 @@
 
       
         
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自從Java8 引入函數式程式設計的語法以來, 就有一些相關的程式語彙是以前未曾注意到, 但是在看函數式程式設計的文章時又常被提起.而一級函數(First-class Function) 就是其中一個例子.</p>
+          <p>自從Java8 引入函數式程式設計的語法以來, 就有一些相關的程式語彙是以前未曾注意到, 但是在看函數式程式設計的文章時又常被提起.而一級函數(First-class Function) 就是其中一個例子.</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/11/First-Class-Function-in-Java8/#more" rel="contents">
@@ -748,18 +891,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -773,6 +913,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -785,7 +929,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2016/05/shell-script-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -804,16 +952,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/05/shell-script-notes/" itemprop="url">
-                  Linux Shell Script 的筆記
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2016/05/shell-script-notes/" itemprop="url">Linux Shell Script 的筆記</a></h2>
         
 
         <div class="post-meta">
@@ -865,6 +1005,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -872,7 +1015,7 @@
 
       
         
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 <a href="http://linux.vbird.org/">鳥哥</a> 的幫助來找尋。</p>
+          <p>有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 <a href="http://linux.vbird.org/" target="_blank" rel="external">鳥哥</a> 的幫助來找尋。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/05/shell-script-notes/#more" rel="contents">
@@ -883,18 +1026,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -908,6 +1048,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -920,7 +1064,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2015/10/import-ssl-ca-into-keystore/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -939,16 +1087,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2015/10/import-ssl-ca-into-keystore/" itemprop="url">
-                  如何把ssl 憑證匯入Java Keystore
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2015/10/import-ssl-ca-into-keystore/" itemprop="url">如何把ssl 憑證匯入Java Keystore</a></h2>
         
 
         <div class="post-meta">
@@ -1000,6 +1140,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1007,7 +1150,7 @@
 
       
         
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JAVA 是用keystore 來管理憑證。如果我們都是用JDK 的keytool 來產生key 和憑證時，是不會遇到憑證匯入keystore 的問題。但是如果key 和憑證是已經存在，或並不是經由keytool 產生的。那我們要如何匯入憑證進入 keystore ？</p>
+          <p>JAVA 是用keystore 來管理憑證。如果我們都是用JDK 的keytool 來產生key 和憑證時，是不會遇到憑證匯入keystore 的問題。但是如果key 和憑證是已經存在，或並不是經由keytool 產生的。那我們要如何匯入憑證進入 keystore ？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2015/10/import-ssl-ca-into-keystore/#more" rel="contents">
@@ -1018,18 +1161,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1043,6 +1183,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1055,7 +1199,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2015/05/use-ssh-key/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1074,16 +1222,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2015/05/use-ssh-key/" itemprop="url">
-                  SSH Key的使用
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2015/05/use-ssh-key/" itemprop="url">SSH Key的使用</a></h2>
         
 
         <div class="post-meta">
@@ -1135,6 +1275,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1142,7 +1285,8 @@
 
       
         
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?<br>SSH KEY 的交換就是其中的一種方式.</p>
+          <p>我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?<br>
+SSH KEY 的交換就是其中的一種方式.</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2015/05/use-ssh-key/#more" rel="contents">
@@ -1153,18 +1297,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1178,6 +1319,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1206,63 +1351,68 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
-               alt="Lawrence Lin" />
-          <p class="site-author-name" itemprop="name">Lawrence Lin</p>
-           
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
+                alt="Lawrence Lin" />
+            
+              <p class="site-author-name" itemprop="name">Lawrence Lin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
+          </div>
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">7</span>
-                <span class="site-state-item-name">文章</span>
-              </a>
-            </div>
-          
+          <nav class="site-state motion-element">
 
-          
-
-          
             
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
             
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">標籤</span>
-              </a>
-            </div>
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
 
-        </nav>
+          <div class="links-of-author motion-element">
+            
+          </div>
 
-        
-
-        <div class="links-of-author motion-element">
           
+          
+
+          
+          
+
+          
+
         </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -1279,30 +1429,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
 
-<div class="theme-info">
-  主題 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -1313,6 +1469,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -1347,49 +1505,61 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
 
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -1418,6 +1588,10 @@
 
 
 
+
+
+
+
   
 
 
@@ -1426,6 +1600,11 @@
 
   
 
+  
+
+  
+
+  
   
 
   

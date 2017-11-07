@@ -7,6 +7,54 @@
     </url>
 
     <url>
+        <loc>http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/</loc>
+        <lastmod>2017-11-07T16:46:59.385Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/2015/10/import-ssl-ca-into-keystore/</loc>
+        <lastmod>2017-11-07T16:45:38.473Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/2015/05/use-ssh-key/</loc>
+        <lastmod>2017-11-07T16:45:28.202Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/2016/05/shell-script-notes/</loc>
+        <lastmod>2017-11-07T16:45:13.827Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/</loc>
+        <lastmod>2017-11-07T16:45:01.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/2017/04/ansible-notes/</loc>
+        <lastmod>2017-11-07T16:44:42.377Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://www.lawrencelin.info/2017/05/preview-before-upload-using-html5-and-backend-process/</loc>
         <lastmod>2017-05-18T16:24:43.999Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,46 +65,6 @@
     <url>
         <loc>http://www.lawrencelin.info/2017/04/date-processing-in-programming-language/</loc>
         <lastmod>2017-04-27T16:35:44.309Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/2017/04/ansible-notes/</loc>
-        <lastmod>2017-04-27T15:46:02.022Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/</loc>
-        <lastmod>2017-02-07T16:56:39.517Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/2016/05/shell-script-notes/</loc>
-        <lastmod>2017-02-07T16:55:45.569Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/2015/05/use-ssh-key/</loc>
-        <lastmod>2017-02-07T16:55:22.523Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/2015/10/import-ssl-ca-into-keystore/</loc>
-        <lastmod>2017-02-07T16:55:02.603Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -2,76 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://www.lawrencelin.info/tags/ssl-cetification/</loc>
-        <lastmod>2017-02-07T16:55:02.603Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/keystore/</loc>
-        <lastmod>2017-02-07T16:55:02.603Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/ssh/</loc>
-        <lastmod>2017-02-07T16:55:22.523Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/shell/</loc>
-        <lastmod>2017-02-07T16:55:45.569Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/linux/</loc>
-        <lastmod>2017-02-07T16:55:45.569Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/lambda/</loc>
-        <lastmod>2017-02-07T16:56:39.517Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/functional-programming/</loc>
-        <lastmod>2017-02-07T16:56:39.517Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/ansible/</loc>
-        <lastmod>2017-04-27T15:46:02.022Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/devops/</loc>
-        <lastmod>2017-04-27T15:46:02.022Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.lawrencelin.info/tags/java/</loc>
-        <lastmod>2017-04-27T16:35:44.309Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://www.lawrencelin.info/tags/python/</loc>
         <lastmod>2017-04-27T16:35:44.309Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -95,6 +25,90 @@
     <url>
         <loc>http://www.lawrencelin.info/tags/mysql/</loc>
         <lastmod>2017-05-18T16:24:43.999Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/ansible/</loc>
+        <lastmod>2017-11-07T16:44:42.377Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/devops/</loc>
+        <lastmod>2017-11-07T16:44:42.377Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/lambda/</loc>
+        <lastmod>2017-11-07T16:45:01.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/functional-programming/</loc>
+        <lastmod>2017-11-07T16:45:01.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/shell/</loc>
+        <lastmod>2017-11-07T16:45:13.827Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/linux/</loc>
+        <lastmod>2017-11-07T16:45:13.827Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/ssh/</loc>
+        <lastmod>2017-11-07T16:45:28.202Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/ssl-cetification/</loc>
+        <lastmod>2017-11-07T16:45:38.473Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/keystore/</loc>
+        <lastmod>2017-11-07T16:45:38.473Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/java/</loc>
+        <lastmod>2017-11-07T16:45:38.473Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/spark/</loc>
+        <lastmod>2017-11-07T16:46:59.385Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.lawrencelin.info/tags/windows/</loc>
+        <lastmod>2017-11-07T16:46:59.385Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

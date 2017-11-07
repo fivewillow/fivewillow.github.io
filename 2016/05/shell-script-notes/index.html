@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-tw">
+<html class="theme-next gemini use-motion" lang="zh-tw">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -18,6 +22,7 @@
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -45,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="shell,linux," />
@@ -57,23 +77,20 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
-
-
-
-
-<meta name="description" content="前言有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥 的幫助來找尋。">
+<meta name="description" content="有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥 的幫助來找尋。">
+<meta name="keywords" content="shell,linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux Shell Script 的筆記">
 <meta property="og:url" content="http://www.lawrencelin.info/2016/05/shell-script-notes/index.html">
-<meta property="og:site_name" content="Lawrence's note">
-<meta property="og:description" content="前言有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥 的幫助來找尋。">
-<meta property="og:updated_time" content="2017-02-07T16:55:45.569Z">
+<meta property="og:site_name" content="Lawrence&#39;s note">
+<meta property="og:description" content="有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥 的幫助來找尋。">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2017-11-07T16:45:13.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Shell Script 的筆記">
-<meta name="twitter:description" content="前言有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥 的幫助來找尋。">
+<meta name="twitter:description" content="有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 鳥哥 的幫助來找尋。">
 
 
 
@@ -81,10 +98,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -108,10 +127,6 @@
 
 
   <title>Linux Shell Script 的筆記 | Lawrence's note</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
-
   
 
 
@@ -130,18 +145,16 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -188,7 +201,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -197,22 +210,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            歸檔
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
           </a>
         </li>
       
@@ -244,7 +257,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2016/05/shell-script-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -262,14 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                Linux Shell Script 的筆記
-              
-            
-          </h2>
+          <h2 class="post-title" itemprop="name headline">Linux Shell Script 的筆記</h2>
         
 
         <div class="post-meta">
@@ -321,27 +331,37 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 <a href="http://linux.vbird.org/" target="_blank" rel="external">鳥哥</a> 的幫助來找尋。</p>
+        <p>有時，我們會寫一些 Shell Script 之類的小工具來管理或操作 Linux系統，以減少煩瑣的指令輸入。不過在 Shell Script 中，常有一些隱晦又難理解的語法或表示法，每當需要用時，都需要靠 google大神或 <a href="http://linux.vbird.org/" target="_blank" rel="external">鳥哥</a> 的幫助來找尋。</p>
 <a id="more"></a>
 <p>這些資料大多是我在網路上搜尋的記錄，以便日後遇到時，可以快速地查尋。</p>
-<h1 id="基本語法"><a href="#基本語法" class="headerlink" title="基本語法"></a>基本語法</h1><h2 id="if-then-述句"><a href="#if-…-then-述句" class="headerlink" title="if … then 述句"></a>if … then 述句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if [ condition1 ]; then</span><br><span class="line">  # do something 1</span><br><span class="line">elif [ condition2 ]; then</span><br><span class="line">  # do something 2</span><br><span class="line">else</span><br><span class="line">  # others</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h2 id="while-及-until-述句"><a href="#while-及-until-述句" class="headerlink" title="while 及 until 述句"></a>while 及 until 述句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 當 condition 成立時，就執行迴圈</span><br><span class="line">while [ condition ]</span><br><span class="line">do</span><br><span class="line">  # do something</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 當 condition 成立時，就終止迴圈</span><br><span class="line">until [ condition ]</span><br><span class="line">do</span><br><span class="line">  # do something</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-<h2 id="for-迴圈"><a href="#for-迴圈" class="headerlink" title="for 迴圈"></a>for 迴圈</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> word1 word2 …</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (( 初始值; 限制值; 執行步階 ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<h2 id="case-判斷"><a href="#case-判斷" class="headerlink" title="case 判斷"></a>case 判斷</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> word <span class="keyword">in</span></span><br><span class="line">    pattern1)</span><br><span class="line">      <span class="comment"># do something 1</span></span><br><span class="line">      ;;</span><br><span class="line">    pattern2)</span><br><span class="line">      <span class="comment"># do something 2</span></span><br><span class="line">      ;;</span><br><span class="line">    *)</span><br><span class="line">      <span class="comment"># 都不符合，就執行這的程式</span></span><br><span class="line">      ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
-<h2 id="function"><a href="#function" class="headerlink" title="function"></a>function</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">function_name</span></span>() &#123;</span><br><span class="line">true<span class="comment"># code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="基本語法"><a class="markdownIt-Anchor" href="#基本語法"></a> 基本語法</h1>
+<h2 id="if-then-述句"><a class="markdownIt-Anchor" href="#if-then-述句"></a> if … then 述句</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if [ condition1 ]; then</div><div class="line">  # do something 1</div><div class="line">elif [ condition2 ]; then</div><div class="line">  # do something 2</div><div class="line">else</div><div class="line">  # others</div><div class="line">fi</div></pre></td></tr></table></figure>
+<h2 id="while-及-until-述句"><a class="markdownIt-Anchor" href="#while-及-until-述句"></a> while 及 until 述句</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 當 condition 成立時，就執行迴圈</div><div class="line">while [ condition ]</div><div class="line">do</div><div class="line">  # do something</div><div class="line">done</div><div class="line"></div><div class="line"># 當 condition 成立時，就終止迴圈</div><div class="line">until [ condition ]</div><div class="line">do</div><div class="line">  # do something</div><div class="line">done</div></pre></td></tr></table></figure>
+<h2 id="for-迴圈"><a class="markdownIt-Anchor" href="#for-迴圈"></a> for 迴圈</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> var <span class="keyword">in</span> word1 word2 …</div><div class="line"><span class="keyword">do</span></div><div class="line">  <span class="comment"># do something</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (( 初始值; 限制值; 執行步階 ))</div><div class="line"><span class="keyword">do</span></div><div class="line">  <span class="comment"># do something</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<h2 id="case-判斷"><a class="markdownIt-Anchor" href="#case-判斷"></a> case 判斷</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> word <span class="keyword">in</span></div><div class="line">    pattern1)</div><div class="line">      <span class="comment"># do something 1</span></div><div class="line">      ;;</div><div class="line">    pattern2)</div><div class="line">      <span class="comment"># do something 2</span></div><div class="line">      ;;</div><div class="line">    *)</div><div class="line">      <span class="comment"># 都不符合，就執行這的程式</span></div><div class="line">      ;;</div><div class="line"><span class="keyword">esac</span></div></pre></td></tr></table></figure>
+<h2 id="function"><a class="markdownIt-Anchor" href="#function"></a> function</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">function_name</span></span>() &#123;</div><div class="line">true<span class="comment"># code</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>函式有幾個要注意的地方:</p>
 <ul>
 <li>在使用函式之前一定要先定義它，也就是在一個 Shell Script 中，一定要先寫函式的內容，在檔案最後再寫會呼叫函式的程式部份。</li>
 <li>在 Shell Script 中的變數全部都是全域變數 (Global)，所以在函式中的變數也會影響函式外的其他部份。</li>
-<li>命令列輸入的參數在 Shell Script 中是以 $1, $2….來讀取，但是這些參數並不會在函式中出現。所以必須使用傳遞參數的方式來將要在函式中使用的變數傳給該函式。傳遞的方法和在命令列中使用 Shell Script 的方式一樣，例如：name arg1 arg2..。傳進函式的變數會以 $1,$2… 來儲存，這和命令列傳給 Shell Script 的參數名稱一樣但內容不同。</li>
+<li>命令列輸入的參數在 Shell Script 中是以 $1, $2…來讀取，但是這些參數並不會在函式中出現。所以必須使用傳遞參數的方式來將要在函式中使用的變數傳給該函式。傳遞的方法和在命令列中使用 Shell Script 的方式一樣，例如：name arg1 arg2…。傳進函式的變數會以 $1,$2… 來儲存，這和命令列傳給 Shell Script 的參數名稱一樣但內容不同。</li>
 </ul>
-<h1 id="開頭的內隱變數"><a href="#開頭的內隱變數" class="headerlink" title="$ 開頭的內隱變數"></a>$ 開頭的內隱變數</h1><table>
+<h1 id="開頭的內隱變數"><a class="markdownIt-Anchor" href="#開頭的內隱變數"></a> $ 開頭的內隱變數</h1>
+<table>
 <thead>
 <tr>
 <th style="text-align:left">變數名稱</th>
@@ -379,11 +399,12 @@
 </tr>
 <tr>
 <td style="text-align:left">$@</td>
-<td style="text-align:left">包含所有輸入的參數；將所有參數以空白為間隔，存在 $@ 中。也就是說 $@ 代表了 “$1” “$2” “$3”….。</td>
+<td style="text-align:left">包含所有輸入的參數；將所有參數以空白為間隔，存在 $@ 中。也就是說 $@ 代表了 “$1” “$2” “$3”…。</td>
 </tr>
 </tbody>
 </table>
-<h1 id="條件判斷"><a href="#條件判斷" class="headerlink" title="條件判斷"></a>條件判斷</h1><p>運算元：test  或 [ condition ]。 注意 [ ] 中的空白間隔。</p>
+<h1 id="條件判斷"><a class="markdownIt-Anchor" href="#條件判斷"></a> 條件判斷</h1>
+<p>運算元：test  或 [ condition ]。 注意 [ ] 中的空白間隔。</p>
 <table>
 <thead>
 <tr>
@@ -485,27 +506,15 @@
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -519,7 +528,7 @@
       
 
       
-        
+      
       
 
       
@@ -547,6 +556,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -562,16 +575,19 @@
 
 
           
-  <div class="comments" id="comments">
-    
+
+  
+    <div class="comments" id="comments">
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
           <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
         </noscript>
       </div>
-    
-  </div>
+    </div>
+
+  
+
 
 
         </div>
@@ -587,72 +603,77 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目錄
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             本站概覽
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
-               alt="Lawrence Lin" />
-          <p class="site-author-name" itemprop="name">Lawrence Lin</p>
-           
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460"
+                alt="Lawrence Lin" />
+            
+              <p class="site-author-name" itemprop="name">Lawrence Lin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
+          </div>
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">7</span>
-                <span class="site-state-item-name">文章</span>
-              </a>
-            </div>
-          
+          <nav class="site-state motion-element">
 
-          
-
-          
             
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
             
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">標籤</span>
-              </a>
-            </div>
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
 
-        </nav>
+          <div class="links-of-author motion-element">
+            
+          </div>
 
-        
-
-        <div class="links-of-author motion-element">
           
+          
+
+          
+          
+
+          
+
         </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -665,7 +686,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本語法"><span class="nav-number">2.</span> <span class="nav-text">基本語法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#if-then-述句"><span class="nav-number">2.1.</span> <span class="nav-text">if … then 述句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while-及-until-述句"><span class="nav-number">2.2.</span> <span class="nav-text">while 及 until 述句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-迴圈"><span class="nav-number">2.3.</span> <span class="nav-text">for 迴圈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-判斷"><span class="nav-number">2.4.</span> <span class="nav-text">case 判斷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function"><span class="nav-number">2.5.</span> <span class="nav-text">function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#開頭的內隱變數"><span class="nav-number">3.</span> <span class="nav-text">$ 開頭的內隱變數</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#條件判斷"><span class="nav-number">4.</span> <span class="nav-text">條件判斷</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本語法"><span class="nav-number">1.</span> <span class="nav-text"> 基本語法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#if-then-述句"><span class="nav-number">1.1.</span> <span class="nav-text"> if … then 述句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while-及-until-述句"><span class="nav-number">1.2.</span> <span class="nav-text"> while 及 until 述句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-迴圈"><span class="nav-number">1.3.</span> <span class="nav-text"> for 迴圈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-判斷"><span class="nav-number">1.4.</span> <span class="nav-text"> case 判斷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function"><span class="nav-number">1.5.</span> <span class="nav-text"> function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#開頭的內隱變數"><span class="nav-number">2.</span> <span class="nav-text"> $ 開頭的內隱變數</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#條件判斷"><span class="nav-number">3.</span> <span class="nav-text"> 條件判斷</span></a></li></ol></div>
             
 
           </div>
@@ -685,30 +706,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
 
-<div class="theme-info">
-  主題 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -719,6 +746,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -753,53 +782,65 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -840,6 +881,10 @@
 
 
 
+
+
+
+
   
 
 
@@ -848,6 +893,11 @@
 
   
 
+  
+
+  
+
+  
   
 
   
