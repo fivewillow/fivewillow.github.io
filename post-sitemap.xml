@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://www.lawrencelin.info/2017/11/spark-on-yarn-in-windows/</loc>
+        <lastmod>2017-11-08T16:44:49.504Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/</loc>
         <lastmod>2017-11-07T16:46:59.385Z</lastmod>
         <changefreq>weekly</changefreq>
