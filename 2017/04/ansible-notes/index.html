@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Ansible 是屬於 push-based 的自動部署工具, 我們不需要在遠端機器上安裝任何 client 端的程式或是 agent, 只要確定好有安裝 python 2.6以上的版本就可以了. Ansible 主要是經由 SSH 來進行控制及設定遠端的機器, 經由這樣子的設計, 我們在使用 ansible 時, 所需要的前置作業就會少很多.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible 筆記">
+<meta property="og:url" content="http://www.lawrencelin.info/2017/04/ansible-notes/index.html">
+<meta property="og:site_name" content="Lawrence&#39;s note">
+<meta property="og:description" content="Ansible 是屬於 push-based 的自動部署工具, 我們不需要在遠端機器上安裝任何 client 端的程式或是 agent, 只要確定好有安裝 python 2.6以上的版本就可以了. Ansible 主要是經由 SSH 來進行控制及設定遠端的機器, 經由這樣子的設計, 我們在使用 ansible 時, 所需要的前置作業就會少很多.">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-04-22T15:52:14.000Z">
+<meta property="article:modified_time" content="2022-01-17T16:02:56.813Z">
+<meta property="article:author" content="Lawrence Lin">
+<meta property="article:tag" content="ansible">
+<meta property="article:tag" content="devops">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://www.lawrencelin.info/2017/04/ansible-notes/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://www.lawrencelin.info/2017/04/ansible-notes/","path":"2017/04/ansible-notes/","title":"Ansible 筆記"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Ansible 筆記 | Lawrence's note</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44038136-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-44038136-3","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lawrence's note</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> 安裝 Ansible</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text"> 使用 YUM 安裝</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"> 開始使用 Ansible</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text"> 設定 SSH 公開金鑰認證</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"> 設定 Ansible Invetory File</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"> Ansible 的第一次體驗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text"> 關於 playbook</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"> 從一個簡單的 playbook 開始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text"> Hosts 和 Users</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text"> Tasks list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.3.</span> <span class="nav-text"> Handlers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.4.</span> <span class="nav-text"> 變數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.4.1.</span> <span class="nav-text"> 內建變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.4.2.</span> <span class="nav-text"> Facts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.4.3.</span> <span class="nav-text"> 關閉 Facts</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"> Template</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text"> 開始執行 Playbook</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lawrence Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/04/ansible-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lawrence Lin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lawrence's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ansible 筆記
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-04-22 23:52:14" itemprop="dateCreated datePublished" datetime="2017-04-22T23:52:14+08:00">2017-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-01-18 00:02:56" itemprop="dateModified" datetime="2022-01-18T00:02:56+08:00">2022-01-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Ansible 是屬於 <strong>push-based</strong> 的自動部署工具, 我們不需要在遠端機器上安裝任何 client 端的程式或是 agent, 只要確定好有安裝 python 2.6以上的版本就可以了. Ansible 主要是經由 SSH 來進行控制及設定遠端的機器, 經由這樣子的設計, 我們在使用 ansible 時, 所需要的前置作業就會少很多.</p>
+<span id="more"></span>
+<h1><span id="安裝-ansible"> 安裝 Ansible</span></h1>
+<p>Ansible 預設是經由 SSH protocol 來管理其它的遠端機器. 因此, 需要一台機器作為中央控管來操作 Ansible 的所有指令 , Ansible 稱為 ** Control Machine **, 而其它的遠端機器則稱為 ** Managed Node **. 這些機器都需要安裝 Python 2.6 以上的版本.</p>
+<h2><span id="使用-yum-安裝"> 使用 YUM 安裝</span></h2>
+<p>這裡使用的是 CentOS7 的版本, 如果需要知道其它作業系統的安裝, 可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/intro_installation.html">Ansible Installation</a></p>
+<p>在安裝 Ansible 之前,先安裝 <a target="_blank" rel="noopener" href="http://fedoraproject.org/wiki/EPEL">EPEL</a> 這個擴充資源庫</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rpm -Uhv https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">sudo yum -y update</span><br></pre></td></tr></table></figure>
+<p>然後再安裝 Ansible</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install ansible</span><br></pre></td></tr></table></figure>
+<h1><span id="開始使用-ansible"> 開始使用 Ansible</span></h1>
+<h2><span id="設定-ssh-公開金鑰認證"> 設定 SSH 公開金鑰認證</span></h2>
+<p>在開始使用 Ansible 之前, 我們可以設定 SSH 公開金鑰認證(Public Key Authentication), 來讓我們不用每次都要打密碼才能執行 Ansible 指令.</p>
+<p>首先, 先確定 <code>~/.ssh</code> 是否存在且目錄的權限是否正確</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/.ssh</span><br><span class="line">chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure>
+<p>接下來産生 SSH 金鑰</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<p>在産生的過程中, 會詢問一些問題, 如果沒有什麼要修改就直接使用預設值.<br>
+最後, 會詢問是要不要設定金鑰保護密碼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enter passphrase (empty for no passphrase):</span><br></pre></td></tr></table></figure>
+<p>如果有設密碼, 就會在每次使用時, 都會詢問密碼. 如果不要設定密碼的話就直接按下 Enter 鍵即可.<br>
+這時我們可以在 <code>~/.ssh</code> 下看到這二個新産生檔案:</p>
+<ul>
+<li>id_ras.pub:公開金鑰(public key), 可以對外開放, 可以放在遠端機器上.</li>
+<li>id_rsa: 私密金鑰(private key), 不可以對外開放, 需放在本機上.</li>
+</ul>
+<p>接下來, 就要把所産生的公開金鑰放到遠端機器上.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub username@host</span><br></pre></td></tr></table></figure>
+<p>完成 SSH 的設定, 我們可以開始進入 ansible 的世界.</p>
+<h2><span id="設定-ansible-invetory-file"> 設定 Ansible Invetory File</span></h2>
+<p>Ansible 如何知道有那些遠端的主機需要被管理呢? Ansible 有一個主機的管理設定檔, 稱為 <code>Invetory File</code>. 用來管理遠端主機的資訊. 這個檔案預設是放在 <code>/etc/ansible/hosts</code></p>
+<p>假設我們有二台 web server 的IP 分別是 10.0.15.11 及 10.0.15.12, 我們可以直接寫入檔案中.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10.0.15.11</span><br><span class="line">10.0.15.12</span><br></pre></td></tr></table></figure>
+<p>這樣子就完成一個最簡單的 <code>Invetory File</code>. 除了使用 IP 外, 也可以使用 hostname.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">web01</span><br><span class="line">web02</span><br></pre></td></tr></table></figure>
+<p>也可以為它加上群組, 讓我們可以對整個群組內的機器下達的相同指令.只要使用中括號把群組名括起來:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我們定義一個叫webservers 的群組</span></span><br><span class="line">[webservers]</span><br><span class="line">10.0.15.11</span><br><span class="line">10.0.15.12</span><br></pre></td></tr></table></figure>
+<p>有時, 我們使用 vm 或 container 之類的技術, 在同一台機器上跑多個 nodes. 這時我們就不能使用 SSH port 的預設值 22 來溝通.<br>
+Ansible 有提供 <code>ansible_host</code>, <code>ansible_port</code> 這二個參數來讓我們對預設值進行修改:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假設我們在192.168.10.10這台機器上開二個vm, 其ssh port 分別為 2201, 2202</span></span><br><span class="line">[webservers]</span><br><span class="line">web01 ansible_host=192.168.10.10 ansible_port=2201</span><br><span class="line">web02 ansible_host=192.168.10.10 ansible_port=2202</span><br></pre></td></tr></table></figure>
+<h1><span id="ansible-的第一次體驗"> Ansible 的第一次體驗</span></h1>
+<p>完成 <code>Inventory File</code> 的設定後, 在命令列下達以下指令, 測試 Ansible 是否可以連到我們的遠端主機</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># all 是告訴 ansible 測試所有的遠端主機</span></span><br><span class="line">$ ansible all -m ping</span><br><span class="line">web01 | SUCCESS =&gt; &#123;</span><br><span class="line">   <span class="string">&quot;changed&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">   <span class="string">&quot;ping&quot;</span>: <span class="string">&quot;pong&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">web02 | SUCCESS =&gt; &#123;</span><br><span class="line">   <span class="string">&quot;changed&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">   <span class="string">&quot;ping&quot;</span>: <span class="string">&quot;pong&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>看到遠端主機有回應, 就代表我們的設置是正確.</p>
+<p>接著我們來查看所有遠端主機的時間, 我們可以用以下指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -m: 是指定 ansible 模組的名稱, 我們這裡使用 command 模組</span></span><br><span class="line"><span class="comment"># -a: 是模組的參數</span></span><br><span class="line">$ ansible all  -m <span class="string">&quot;command&quot;</span> -a <span class="string">&quot;date&quot;</span></span><br><span class="line">web01 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">Wed Apr 19 08:42:35 UTC 2017</span><br><span class="line"></span><br><span class="line">web02 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">Wed Apr 19 08:42:35 UTC 2017</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 Inventory File 是放在其它的位置可以加上 -i 的參數來指定</span></span><br><span class="line">$ ansible all -i hosts -m <span class="string">&quot;command&quot;</span> -a <span class="string">&quot;date&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Ansible 稱這種使用方式為 <code>ad-hoc</code>, 可以提供我們快速地對遠端主機下一些指令, 或是我們可以經由 ad-hoc 來學習或測試 Ansible 的模組. 不過這種使用方式, 是一種臨時的作法. 在實務上, 仍是建議要把執行的指令寫成 playbook.</p>
+<p>有關 ad-hoc 可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/intro_adhoc.html">官方的說明</a></p>
+<h1><span id="關於-playbook"> 關於 playbook</span></h1>
+<p>什麼是 <code>playbook</code> 呢? Playbook 是 ansible 用來描述有關遠端主機的參數配置, 系統部署以及服務管理的一種描述語言. 而 playbook 內則是由許多的 tasks 所組成. 經由這些描述, ansible可以讓遠端的主機一歩一歩地完成我們所想要的配罝或部署. 也可以這樣子理解, playbook 就像是電影所使用的劇本, 裡面會描述電影的一切細節. 而演員就會按照劇本來進行表演, 只是現在演員的角色被替換成遠端主機. 遠端主機會依照 playbook 的描述一歩一歩地完成, 我們所交付的任務.</p>
+<h1><span id="從一個簡單的-playbook-開始"> 從一個簡單的 playbook 開始</span></h1>
+<p>我們先來看一個簡單的 playbook 範例, 在這個範例中,遠端主機(web01)是安裝好 Centos 7 而我們會使用 YUM 來安裝 Nginx.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- name: Install nginx server</span><br><span class="line">  hosts: web01</span><br><span class="line">  become: yes</span><br><span class="line"></span><br><span class="line">  gather_facts: true</span><br><span class="line"></span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line"></span><br><span class="line">    - name: NGINX | Installing NGINX repo rpm</span><br><span class="line">      yum:</span><br><span class="line">        name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br><span class="line"></span><br><span class="line">    - name: NGINX | Installing NGINX</span><br><span class="line">      yum:</span><br><span class="line">        name: nginx</span><br><span class="line">        state: present</span><br><span class="line"></span><br><span class="line">    - name: NGINX | Coping default configaration file</span><br><span class="line">      template:</span><br><span class="line">        src: &quot;&#123;&#123; playbook_dir &#125;&#125;/conf/default.conf.j2&quot;</span><br><span class="line">        dest: /etc/nginx/conf.d/default.conf</span><br><span class="line">      notify: NGINX | Restart</span><br><span class="line"></span><br><span class="line">  handlers:</span><br><span class="line">    - name: NGINX | Restart</span><br><span class="line">      systemd:</span><br><span class="line">        name: nginx</span><br><span class="line">        state: restarted</span><br><span class="line">        enabled: true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Playbook 是使用 YAML 來編寫, YAML 相較於其它比較通用的格式,例如 XML 或 JSON, 是一種有利於人們閱讀及編寫的語法. 有關 YAML 的詳細語法可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a></p>
+<p>一份 playbook 文件可以包含一個或多個 <code>play</code>. 一個 <code>play</code> 則是一組包含著主機資訊,使用者權限以及所要執行的任務描述. 簡單來說, 在整份 playbook 文件中, 可以分成以下這幾個部份:</p>
+<ul>
+<li>Hosts 和 Users</li>
+<li>Tasks list</li>
+<li>Handlers</li>
+<li>變數</li>
+</ul>
+<h2><span id="hosts-和-users"> Hosts 和 Users</span></h2>
+<p><strong>Hosts:</strong> 指示 ansible 要到那些遠端主機去執行 Tasks. 主機或主機群組則是被定義在 <code>Invetory File</code>中. 每個 <code>play</code> 都必須指定 <code>hosts</code>.</p>
+<p>Hosts 有一些特別的表示法可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></p>
+<p><strong>Users:</strong> 如果我們所執行的 Tasks 需要特別的權限, 如 <code>root</code>, 則可以用 <code>become</code>,  <code>become_user</code> 來指定使用者的權限.<br>
+例如, 需要用 root 權限來進行安裝 nginx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- name: Install nginx server</span><br><span class="line">  hosts: web01</span><br><span class="line">  become: yes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>become</code> 語法是告訴 ansible 要開啟使用者權限, 如果我們不使用 <code>become_user</code> 來指定使用者時, ansible 則會預設為 root 的權限. 如果要指定特別的使用者權限來進行操作, 則需要加上 <code>becomde_user</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- name: Install nginx server as nginx user</span><br><span class="line">  hosts: web01</span><br><span class="line">  become: yes</span><br><span class="line">#  ansible 會換轉使用者為 nginx, 來執行指令</span><br><span class="line">  become_user: nginx</span><br></pre></td></tr></table></figure>
+<p>有關使用者權限的詳細說明, 可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/become.html">Become</a></p>
+<h2><span id="tasks-list"> Tasks list</span></h2>
+<p>每一組 <code>play</code> 會包含一組 tasks, 這些 tasks 會依照撰寫的順序來執行. Task 的內容基本上就是 ansible 的模組及其參數.<br>
+Ansible 提供很多模組, 這裡是有關 ansible 的 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/modules_by_category.html">模組列表</a></p>
+<p>以下就是一個基本的 task 範例, 我們使用 YUM 模組來安裝 nginx.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks:</span><br><span class="line">  - name: NGINX | Installing NGINX</span><br><span class="line">    yum:</span><br><span class="line">      name: nginx</span><br><span class="line">      state: present</span><br></pre></td></tr></table></figure>
+<p>我們也可以使用 <code>key=value</code> 的格式, 來表示參數</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tasks:</span><br><span class="line">  - name: NGINX | Installing NGINX</span><br><span class="line">    yum: name=nginx state=present</span><br></pre></td></tr></table></figure>
+<h2><span id="handlers"> Handlers</span></h2>
+<p>在一些埸景中, 我們會希望在執行完 task 時, 可以觸發其它的額外的工作項目. 比較常見的例子是, 當我們改變一個服務的設定時,會想要重啓服務來讓設定生效.</p>
+<p>這時, 我們就可以使用 <code>notify</code> 這個關鍵字在 task 中, 來呼叫要觸發的工作任務 (handlers). Handlers 是 task 的一種, 寫法也是一樣, 差別是在 handlers 會監聽 notify, 如果發現有被呼叫才會執行, 不然是不會被執行的.</p>
+<p>以下是 handlers 的一個範例, 我們更改 nginx 的設定檔並重新啓動 nginx 服務:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tasks:</span><br><span class="line">  - name: NGINX | Coping default configaration file</span><br><span class="line">    template:</span><br><span class="line">      src: <span class="string">&quot;&#123;&#123; playbook_dir &#125;&#125;/conf/default.conf.j2&quot;</span></span><br><span class="line">      dest: /etc/nginx/conf.d/default.conf</span><br><span class="line">    notify: NGINX | Restart</span><br><span class="line"></span><br><span class="line">handlers:</span><br><span class="line">   - name: NGINX | Restart</span><br><span class="line">     systemd:</span><br><span class="line">       name: nginx</span><br><span class="line">       state: restarted</span><br><span class="line">       enabled: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2><span id="變數"> 變數</span></h2>
+<p>在 <code>play</code> 中, 我們可以增加 <code>vars</code> 區塊, 來指定變數. 例如:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- name: Install nginx server</span><br><span class="line">  hosts: web01</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br></pre></td></tr></table></figure>
+<p>在這裡, 我們指定一個變數名稱 <code>http_port</code>, 如果我們要在 playbook 中使用時, 則在前後各加上二個大括號. Ansible 在解析這些字符時,就會置換此變數名稱為變數的值. 不過在 ansible 中,變數的使用方式有分二種:</p>
+<p>在 Template 中使用時,可以直接使用, 例如:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listen       &#123;&#123; http_port &#125;&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 YAML 中使用時, 則需要在字串前後加上雙引號 <code>&quot;</code>, 例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src: &quot;&#123;&#123; playbook_dir &#125;&#125;/conf/default.conf.j2&quot;</span><br></pre></td></tr></table></figure>
+<p>有關 ansible 的變數詳細說明可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></p>
+<h3><span id="內建變數"> 內建變數</span></h3>
+<p>Ansible 本身也會提供一些內建的變數(ansible 稱為 Magic Variables), 以方便我們取得 Ansible 本身的一些資訊, 例如 變數 <code>playbook_dir</code> 是放置 playbook 文件的根目錄路徑, 而其它有關內建變數的資訊, 可以參照 <a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts">Magic Variables, and How To Access Information About Other Hosts</a></p>
+<h3><span id="facts"> Facts</span></h3>
+<p>Ansible 還有另外一種變數是用來放置遠端系統資訊, 稱為 <code>Facts</code>. 我們可以先在命令列中輸入以下指令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 假設遠端主機的名稱為 web01</span><br><span class="line">$ ansible web01 -m setup</span><br></pre></td></tr></table></figure>
+<p>則可以看到回傳的結果如下:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">web01 | SUCCESS =&gt; &#123;</span><br><span class="line">   <span class="string">&quot;ansible_facts&quot;</span>: &#123;</span><br><span class="line">      ....</span><br><span class="line">      ....(省略)</span><br><span class="line"></span><br><span class="line">      <span class="string">&quot;ansible_distribution&quot;</span>: <span class="string">&quot;CentOS&quot;</span>,</span><br><span class="line">     <span class="string">&quot;ansible_distribution_major_version&quot;</span>: <span class="string">&quot;7&quot;</span>,</span><br><span class="line">      ....</span><br><span class="line">      ....(省略)</span><br><span class="line">   &#125;,</span><br><span class="line">   <span class="string">&quot;changed&quot;</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這個表示, 當我們在 playbook 或 template 中, 使用 <code>&#123;&#123;ansible_distribution&#125;&#125;</code>, 就可以取到遠端主機的作業系統的發佈套件資訊為 <code>CentOS</code>.</p>
+<h3><span id="關閉-facts"> 關閉 Facts</span></h3>
+<p>在 playbook 中, Facts 是預設開啟的, 如果確定不會使用到 Facts 的變數, 則可以選擇關掉. 只要在 <code>play</code> 中, 增加 <code>gather_facts</code>指令, 例如:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- name: Install nginx server</span><br><span class="line">  hosts: web01</span><br><span class="line">  gather_facts: <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h1><span id="template"> Template</span></h1>
+<p>Ansible 使用 Jinja2 作為 template engine. 我們可以使用 <code>template</code> 模組及變數來完成各式的文件檔. 例如 nginx 的設定檔:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">   listen       &#123;&#123; http_port &#125;&#125;;</span><br><span class="line">   server_name  &#123;&#123;ansible_hostname&#125;&#125;;</span><br><span class="line"></span><br><span class="line">   location / &#123;</span><br><span class="line">       root   /usr/share/nginx/html;</span><br><span class="line">       index  index.html index.htm;</span><br><span class="line">   &#125;</span><br><span class="line">   error_page   500 502 503 504  /50x.html;</span><br><span class="line">   location = /50x.html &#123;</span><br><span class="line">       root   /usr/share/nginx/html;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其它有關 Template 的部分可以參照<a target="_blank" rel="noopener" href="http://docs.ansible.com/ansible/playbooks_templating.html#templating-jinja2">Templating (Jinja2)</a></p>
+<h1><span id="開始執行-playbook"> 開始執行 Playbook</span></h1>
+<p>在了解 playbook 的組成要素之後, 就是要如何來讓 playbook 開始執行. 我們可以在命令列下以下指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假設我們的 playbook 文件是 webservers.yml</span></span><br><span class="line">$ ansible-playbook webservers.yml</span><br></pre></td></tr></table></figure>
+<p>接著我們可以查看輸出</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">PLAY [install web] *************************************************************</span><br><span class="line"></span><br><span class="line">TASK [setup] *******************************************************************</span><br><span class="line">ok: [web01]</span><br><span class="line"></span><br><span class="line">TASK [NGINX | Installing NGINX repo rpm] ***************************************</span><br><span class="line">changed: [web01]</span><br><span class="line"></span><br><span class="line">TASK [NGINX | Installing NGINX] ************************************************</span><br><span class="line">changed: [web01]</span><br><span class="line"></span><br><span class="line">TASK [NGINX | Coping default configaration file] *******************************</span><br><span class="line">changed: [web01]</span><br><span class="line"></span><br><span class="line">RUNNING HANDLER [NGINX | Restart] **********************************************</span><br><span class="line">changed: [web02]</span><br><span class="line"></span><br><span class="line">PLAY RECAP *********************************************************************</span><br><span class="line">web01                      : ok=5    changed=4    unreachable=0    failed=0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>這樣子我們就完成了 nginx 的部署. 而在輸出訊息上, 可以看到每個 Task 的執行結果, <code>PLAY RECAP</code> 這個區塊則是會總結所有task 的結果.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ansible/" rel="tag"># ansible</a>
+              <a href="/tags/devops/" rel="tag"># devops</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/11/First-Class-Function-in-Java8/" rel="prev" title="First Class Function in Java8">
+                  <i class="fa fa-chevron-left"></i> First Class Function in Java8
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/04/date-processing-in-programming-language/" rel="next" title="日期時間的處理-程式語言">
+                  日期時間的處理-程式語言 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

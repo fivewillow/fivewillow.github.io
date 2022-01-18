@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="把 Spark 安裝在Windows 上，是一種非主流的作法，也不太建議用在正式環境上。不過有時就是想要建立一個小型的Spark cluster，來進行開發及測試又不想花時間安裝 VM，這時就會想如果能在Windows 運行那該有多好。 當然，除了自己一步一腳印的自行安裝外，還有另一個簡單的作法是使用Docker，不過我還是喜歡自己動手去研究每個細節的踏實感。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 windows 安裝 Spark Standalone">
+<meta property="og:url" content="http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/index.html">
+<meta property="og:site_name" content="Lawrence&#39;s note">
+<meta property="og:description" content="把 Spark 安裝在Windows 上，是一種非主流的作法，也不太建議用在正式環境上。不過有時就是想要建立一個小型的Spark cluster，來進行開發及測試又不想花時間安裝 VM，這時就會想如果能在Windows 運行那該有多好。 當然，除了自己一步一腳印的自行安裝外，還有另一個簡單的作法是使用Docker，不過我還是喜歡自己動手去研究每個細節的踏實感。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://www.lawrencelin.info/images/spark_in_windows/Spark_Master_01.png">
+<meta property="og:image" content="http://www.lawrencelin.info/images/spark_in_windows/Spark_Master_02.png">
+<meta property="article:published_time" content="2017-11-03T16:35:11.000Z">
+<meta property="article:modified_time" content="2022-01-17T16:02:56.815Z">
+<meta property="article:author" content="Lawrence Lin">
+<meta property="article:tag" content="spark">
+<meta property="article:tag" content="windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.lawrencelin.info/images/spark_in_windows/Spark_Master_01.png">
+
+
+<link rel="canonical" href="http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/","path":"2017/11/spark-standalone-in-windows7/","title":"在 windows 安裝 Spark Standalone"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在 windows 安裝 Spark Standalone | Lawrence's note</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44038136-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-44038136-3","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lawrence's note</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> 部署前的準備</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text"> Cluster 主機的規劃</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text"> 設定 hosts</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"> 開始部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text"> 安裝所需軟體</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"> 安裝 Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text"> 設定環境變數</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"> 啟動 Spark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text"> Master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"> Worker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text"> 檢視 WebUI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text"> 驗證</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"> 曾經踩過的坑</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lawrence Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lawrence Lin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lawrence's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 windows 安裝 Spark Standalone
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-11-04 00:35:11" itemprop="dateCreated datePublished" datetime="2017-11-04T00:35:11+08:00">2017-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-01-18 00:02:56" itemprop="dateModified" datetime="2022-01-18T00:02:56+08:00">2022-01-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>把 Spark 安裝在Windows 上，是一種非主流的作法，也不太建議用在正式環境上。不過有時就是想要建立一個小型的Spark cluster，來進行開發及測試又不想花時間安裝 VM，這時就會想如果能在Windows 運行那該有多好。</p>
+<p>當然，除了自己一步一腳印的自行安裝外，還有另一個簡單的作法是使用Docker，不過我還是喜歡自己動手去研究每個細節的踏實感。</p>
+<span id="more"></span>
+<h1><span id="部署前的準備"> 部署前的準備</span></h1>
+<h2><span id="cluster-主機的規劃"> Cluster 主機的規劃</span></h2>
+<p>先準備三台 windows 的主機，其中有一台是同時運行 master 和work， 其規劃如下</p>
+<!-- more -->
+<table>
+<thead>
+<tr>
+<th>主機名稱</th>
+<th>IP</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>192.168.10.1</td>
+<td>同時運行 master 及worker</td>
+</tr>
+<tr>
+<td>worker01</td>
+<td>192.168.10.2</td>
+<td>運行 worker</td>
+</tr>
+<tr>
+<td>worker02</td>
+<td>192.168.10.3</td>
+<td>運行 worker</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="設定-hosts"> 設定 hosts</span></h2>
+<p>在windows 中， hosts 檔案是放在 <code>C:\Windows\System32\drivers\etc</code> 之下。<br>
+修改 hosts， 如果hosts 不存在則新增一個並複製到每一台主機上。</p>
+<figure class="highlight sh"><figcaption><span>C:\Windows\System32\drivers\etc\hosts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.1 master</span><br><span class="line">192.168.10.2 worker01</span><br><span class="line">192.168.10.3 worker02</span><br></pre></td></tr></table></figure>
+<h1><span id="開始部署"> 開始部署</span></h1>
+<h2><span id="安裝所需軟體"> 安裝所需軟體</span></h2>
+<p>我們要部署的版本是 2.2。在部署之前，依照官方網站的需求，要先安裝這些軟體在每一台主機上。</p>
+<ul>
+<li>Java 8</li>
+<li>Scala 2.11.x (如果你不會用到，可以不用裝)</li>
+<li>Python 2.7/3.4 或之後的版本 (如果你不會用到，可以不用裝)</li>
+</ul>
+<h2><span id="安裝-spark"> 安裝 Spark</span></h2>
+<ol>
+<li>從 <a target="_blank" rel="noopener" href="http://spark.apache.org/downloads.html">Spark 的官方網站下載</a>，預先編譯好的版本，在這我們選擇 spark-2.2.0-bin-hadoop2.7.tgz。</li>
+<li>下載完成後，我們使用解壓縮軟體，把它解開到你所想要放的位置。在這裡我們把它解壓縮到D 磁碟下，並且改名為 <code>spark</code>。</li>
+</ol>
+<p>到這裡，就完成的主要安裝。 理論上，Spark 是運行在JVM 上，應該是可以直接執行。不過在windows上，仍是需要一些hadoop 的輔助程式。到 <a target="_blank" rel="noopener" href="https://github.com/steveloughran/winutils">winutils 下載</a>，選擇spark 所支援的Hadoop版本。<br>
+我們選擇 hadoop-2.7.1，在bin之下找到<code>winutils.exe</code>，把它下載下來並且放到spark 目錄下的bin。</p>
+<h2><span id="設定環境變數"> 設定環境變數</span></h2>
+<p>在安裝完後，需要設定環境變數，可以從 <strong>控制台</strong> -&gt; <strong>系統</strong> -&gt; <strong>進階系統設定</strong> -&gt; <strong>進階</strong> -&gt; <strong>環境變數</strong> 中進行設定。<br>
+以下是我們需要設定的環境變數</p>
+<table>
+<thead>
+<tr>
+<th>環境變數</th>
+<th>內容值</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JAVA_HOME</td>
+<td>Java 的安裝目錄</td>
+<td>設定JAVA 的家目錄</td>
+</tr>
+<tr>
+<td>CLASSPATH</td>
+<td>%JAVA_HOME%\lib</td>
+<td>設定JAVA 的類別路徑</td>
+</tr>
+<tr>
+<td>SPARK_HOME</td>
+<td>SPARK 的安裝目錄</td>
+<td>設定SPARK 的家目錄</td>
+</tr>
+<tr>
+<td>HADOOP_HOME</td>
+<td>SPARK 的安裝目錄</td>
+<td>設定HADOOP 的家目錄</td>
+</tr>
+</tbody>
+</table>
+<p>修改環境變數<code>PATH</code>，將以下這些字串附加在PATH之後。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%JAVA_HOME%\bin;%SPARK_HOME%\bin;%SPARK_HOME%\sbin;%HADOOP_HOME%\bin</span><br></pre></td></tr></table></figure>
+<h1><span id="啟動-spark"> 啟動 Spark</span></h1>
+<h2><span id="master"> Master</span></h2>
+<p>在命令列模式下，執行以下指令，來啟動Spark Master:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-class.cmd org.apache.spark.deploy.master.Master</span><br></pre></td></tr></table></figure>
+<h2><span id="worker"> Worker</span></h2>
+<p>在命令列模式下，執行以下指令，來啟動Spark Worker:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-class2.cmd org.apache.spark.deploy.worker.Worker spark://master:7077</span><br></pre></td></tr></table></figure>
+<h2><span id="檢視-webui"> 檢視 WebUI</span></h2>
+<p>在瀏覽器上鍵入 <code>http://master:8080</code>，就可以看到 WebUI。上面會顯示目前 Spark Master 及Worker 的情況。</p>
+<p><img src="/images/spark_in_windows/Spark_Master_01.png" alt="Spark Web UI"></p>
+<h1><span id="驗證"> 驗證</span></h1>
+<p>我們使用Spark 附的範例程式 <code>SparkPi</code> 來驗證Spark 是否可以正常運行。<br>
+首先，先打開命令列模式，並且切換目錄到 <code>SPARK_HOME</code> 之下，執行以下指令，你可以選擇是要執行Java 版本或是Python 版本</p>
+<p><strong>Java 版本</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-submit —class org.apache.spark.examples.SparkPi —master spark://master:7077 examples/jars/spark-examples_2.11-2.2.0.jar 100</span><br></pre></td></tr></table></figure>
+<p><strong>Python 版本</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master spark://master:7077 examples/src/main/python/pi.py 100</span><br></pre></td></tr></table></figure>
+<p>接著打開 WebUI，就可以看到 SparkPi的運行情況。</p>
+<p><img src="/images/spark_in_windows/Spark_Master_02.png" alt="Spark Result"></p>
+<h1><span id="曾經踩過的坑"> 曾經踩過的坑</span></h1>
+<p><strong>出現 <code>/tmp/hive on HDFS should be writable. Current permissions are:</code>之類的訊息</strong></p>
+<blockquote>
+<p>這個是指在HDFS 文件系統下，Spark 沒有寫入 <code>/tmp/hive</code> 的權限，解決方式可以用以下指令來改變目錄的權限：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winutils chmod 766 -R /tmp/hive</span><br></pre></td></tr></table></figure>
+<p>另外還有一種可能，是Windows 的使用者，沒有足夠的權限。可以檢查此目錄的安全性，把<code>Administrators</code>及使用者設為<code>完全控制</code>。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/spark/" rel="tag"># spark</a>
+              <a href="/tags/windows/" rel="tag"># windows</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/preview-before-upload-using-html5-and-backend-process/" rel="prev" title="如何將圖片預覽上傳及儲存在資料庫中">
+                  <i class="fa fa-chevron-left"></i> 如何將圖片預覽上傳及儲存在資料庫中
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/11/spark-on-yarn-in-windows/" rel="next" title="在 windows 安裝 Spark on Yarn">
+                  在 windows 安裝 Spark on Yarn <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

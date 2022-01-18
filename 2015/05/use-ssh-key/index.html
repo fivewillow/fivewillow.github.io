@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢? SSH KEY 的交換就是其中的一種方式.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH Key的使用">
+<meta property="og:url" content="http://www.lawrencelin.info/2015/05/use-ssh-key/index.html">
+<meta property="og:site_name" content="Lawrence&#39;s note">
+<meta property="og:description" content="我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢? SSH KEY 的交換就是其中的一種方式.">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2015-05-25T09:50:12.000Z">
+<meta property="article:modified_time" content="2022-01-17T16:02:56.812Z">
+<meta property="article:author" content="Lawrence Lin">
+<meta property="article:tag" content="ssh">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://www.lawrencelin.info/2015/05/use-ssh-key/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://www.lawrencelin.info/2015/05/use-ssh-key/","path":"2015/05/use-ssh-key/","title":"SSH Key的使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SSH Key的使用 | Lawrence's note</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44038136-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-44038136-3","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lawrence's note</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> 步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text"> 進入ssh目錄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text"> 建立新的 SSH key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text"> 將公鑰放入主機</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text"> 設定 ssh-agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text"> 自動化執行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text"> 使用 ssh config 來對映多個ssh 帳號</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lawrence Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2015/05/use-ssh-key/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lawrence Lin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lawrence's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SSH Key的使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2015-05-25 17:50:12" itemprop="dateCreated datePublished" datetime="2015-05-25T17:50:12+08:00">2015-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-01-18 00:02:56" itemprop="dateModified" datetime="2022-01-18T00:02:56+08:00">2022-01-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>我們常使用 SSH 的方式登入 Linux主機, 但是每次登入時, 都要打密碼, 有沒有方式可以不用輸入密碼就可以進入呢?<br>
+SSH KEY 的交換就是其中的一種方式.</p>
+<span id="more"></span>
+<h1><span id="步驟"> 步驟</span></h1>
+<h2><span id="進入ssh目錄"> 進入ssh目錄</span></h2>
+<p>首先先到個人的 ssh目錄</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br></pre></td></tr></table></figure>
+<p>如果沒有這個目錄, 需手動建一個</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir .ssh</span><br></pre></td></tr></table></figure>
+<h2><span id="建立新的-ssh-key"> 建立新的 SSH key</span></h2>
+<p>產生一個新的SSH key, 可以使用下列指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<p>依照提示, 輸入你的密碼後,就可以在 <code>.ssh</code>目錄下看到 <code>id_rsa</code>及<code>id_rsa.pub</code>,這二個檔.<code>id_rsa.pub</code> 就是公鑰, <code>id_rsa</code> 則是私鑰</p>
+<h2><span id="將公鑰放入主機"> 將公鑰放入主機</span></h2>
+<p>先把公鑰放到主機</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp ~/.ssh/*.pub [目的主機]:~/.ssh/.</span><br></pre></td></tr></table></figure>
+<p>登入主機</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [username]@[目的主機]</span><br></pre></td></tr></table></figure>
+<p>把公鑰存到主機. 系統預設處理公鑰的檔案為<code>authorized_keys</code>,這個檔案必須把權限設為只有使用者具有寫的權限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.ssh/identity.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">$ chmod 711 ~/.ssh</span><br><span class="line">$ chmod 644 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<h2><span id="設定-ssh-agent"> 設定 <code>ssh-agent</code></span></h2>
+<p>起動 ssh-agent</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> `ssh-agent -s`</span><br></pre></td></tr></table></figure>
+<p>新增 key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add</span><br></pre></td></tr></table></figure>
+<h2><span id="自動化執行"> 自動化執行</span></h2>
+<p>參考<a target="_blank" rel="noopener" href="http://www.cygwin.com/ml/cygwin/2001-06/msg00537.html" title="useful cygwin ssh-agent script">Joseph M. Reagle Jr.</a></p>
+<p>放在 .bash_profile 的 script</p>
+<p>SH_ENV=&quot;$HOME/.ssh/environment&quot;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> function start_agent &#123;</span><br><span class="line">    echo &quot;Initialising new SSH agent...&quot;</span><br><span class="line">    /usr/bin/ssh-agent | sed &#x27;s/^echo/#echo/&#x27; &gt; &quot;$&#123;SSH_ENV&#125;&quot;</span><br><span class="line">    echo succeeded</span><br><span class="line">    chmod 600 &quot;$&#123;SSH_ENV&#125;&quot;</span><br><span class="line">    . &quot;$&#123;SSH_ENV&#125;&quot; &gt; /dev/null</span><br><span class="line"> /usr/bin/ssh-add;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> # Source SSH settings, if applicable</span><br><span class="line"></span><br><span class="line"> if [ -f &quot;$&#123;SSH_ENV&#125;&quot; ]; then</span><br><span class="line">    . &quot;$&#123;SSH_ENV&#125;&quot; &gt; /dev/null</span><br><span class="line">    #ps $&#123;SSH_AGENT_PID&#125; doesn’t work under cywgin</span><br><span class="line">    ps -ef | grep $&#123;SSH_AGENT_PID&#125; | grep ssh-agent$ &gt; /dev/null || &#123;</span><br><span class="line">    start_agent;</span><br><span class="line">&#125;</span><br><span class="line"> else</span><br><span class="line">  start_agent;</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+<h2><span id="使用-ssh-config-來對映多個ssh-帳號"> 使用 ssh config 來對映多個ssh 帳號</span></h2>
+<p>編輯<code>~/.ssh/config</code>, 如果沒有就建一個. 文件格式為</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host [名稱]</span><br><span class="line">    HostName [主機名]</span><br><span class="line">    User [使用者登入ID]</span><br><span class="line">    IdentityFile [私鑰路徑]</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ssh/" rel="tag"># ssh</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/10/import-ssl-ca-into-keystore/" rel="next" title="如何把ssl 憑證匯入Java Keystore">
+                  如何把ssl 憑證匯入Java Keystore <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

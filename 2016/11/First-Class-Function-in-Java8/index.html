@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="自從Java8 引入函數式程式設計的語法以來, 就有一些相關的程式語彙是以前未曾注意到, 但是在看函數式程式設計的文章時又常被提起.而一級函數(First-class Function) 就是其中一個例子.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="First Class Function in Java8">
+<meta property="og:url" content="http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/index.html">
+<meta property="og:site_name" content="Lawrence&#39;s note">
+<meta property="og:description" content="自從Java8 引入函數式程式設計的語法以來, 就有一些相關的程式語彙是以前未曾注意到, 但是在看函數式程式設計的文章時又常被提起.而一級函數(First-class Function) 就是其中一個例子.">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2016-11-21T16:17:01.000Z">
+<meta property="article:modified_time" content="2022-01-17T16:02:56.813Z">
+<meta property="article:author" content="Lawrence Lin">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="lambda">
+<meta property="article:tag" content="functional programming">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/","path":"2016/11/First-Class-Function-in-Java8/","title":"First Class Function in Java8"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>First Class Function in Java8 | Lawrence's note</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44038136-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-44038136-3","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lawrence's note</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> 一等公民(First-class citizen)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"> 高階函數 (High Order Function)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"> 匿名函數 (Anonymous Function&#x2F;Lambda)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text"> 柯里化 (Currying)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lawrence Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://www.lawrencelin.info/2016/11/First-Class-Function-in-Java8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lawrence Lin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lawrence's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          First Class Function in Java8
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2016-11-22 00:17:01" itemprop="dateCreated datePublished" datetime="2016-11-22T00:17:01+08:00">2016-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-01-18 00:02:56" itemprop="dateModified" datetime="2022-01-18T00:02:56+08:00">2022-01-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>自從Java8 引入函數式程式設計的語法以來, 就有一些相關的程式語彙是以前未曾注意到, 但是在看函數式程式設計的文章時又常被提起.而一級函數(First-class Function) 就是其中一個例子.</p>
+<span id="more"></span>
+<h1><span id="一等公民first-class-citizen"> 一等公民(First-class citizen)</span></h1>
+<p>在我們討論一級函數之前, 我們先要了解一下另一個名詞一等公民(First-class citizen)<br>
+按照 wiki的解釋:<br>
+<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/First-class_citizen" title="First-class_citizen">wiki : First-class_citizen</a></p>
+<blockquote>
+<p>In programming language design, a first-class citizen (also type, object, entity, or value) in a given programming language is an entity which supports all the operations generally available to other entities. These operations typically include being passed as an argument, returned from a function, and assigned to a variable.</p>
+</blockquote>
+<p>一個一等公民具有以下主要特徵:</p>
+<ul>
+<li>可以被當作是參數傳遞.</li>
+<li>可以被當成回傳值.</li>
+<li>可以被指派為一個變數.</li>
+</ul>
+<p>而一級函數是一等公民的一分子也同樣具有一等公民的特徵,也就是指函數可以被當作參數傳遞, 回傳值或指派給一個變數.<br>
+以下我們就以java8 的語法來說明 First Class Function 的一些特性:</p>
+<h1><span id="高階函數-high-order-function"> 高階函數 (High Order Function)</span></h1>
+<p>高階函數的定義是函數可以作為參數的傳遞也可以回傳函數當作傳回值.</p>
+<p>參數的傳遞</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;Function&lt;Integer,Integer&gt;,Integer&gt; doAt5 = x -&gt; x.apply(<span class="number">5</span>);</span><br><span class="line">doAt5.apply(x -&gt; x + <span class="number">5</span>  ); <span class="comment">// return 8</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>回傳函數當作傳回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;Double,Function&lt;Double,Double&gt;&gt; generatePow = b -&gt; a -&gt; Math.pow(a,b);</span><br><span class="line">Function&lt;Double, Double&gt; square = generatePow.apply(<span class="number">2.0</span>);</span><br><span class="line">Function&lt;Double, Double&gt; cube = generatePow.apply(<span class="number">3.0</span>);</span><br><span class="line">square.apply(<span class="number">2.0</span>); <span class="comment">//return 4</span></span><br><span class="line">dude.apply(<span class="number">2.0</span>); <span class="comment">// return 8</span></span><br></pre></td></tr></table></figure>
+<h1><span id="匿名函數-anonymous-functionlambda"> 匿名函數 (Anonymous Function/Lambda)</span></h1>
+<p>Java 本身就有提供 匿名內部類別（Anonymous inner class), 但在Java8, 則另外提供 lambda的語法, 使開發者可以用更貼近函數的角度來思考問題.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// using anonymous class</span></span><br><span class="line">Runnable runnbale = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hi Anonymous Function!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// using lambda expressions, after idk 1.8</span></span><br><span class="line">Runnable runnbale = () -&gt; System.out.println(<span class="string">&quot;Hi Anonymous Function!&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1><span id="柯里化-currying"> 柯里化 (Currying)</span></h1>
+<p>柯里化是指把一個多參數的函數轉換成一系列的單參數函數.這是一種使用單參數函數去摸擬多參數函數的一種方法.<br>
+假設有一個函數為 f(a, b) = a + b, 經過 currying 就可以變成 f(a)(b)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;Integer,Function&lt;Integer,Integer&gt;&gt; add = a -&gt; b -&gt; a + b;</span><br><span class="line"></span><br><span class="line">Function&lt;Integer, Integer&gt; plus2 = add.apply(<span class="number">2</span>);</span><br><span class="line">Function&lt;Integer, Integer&gt; plus3 = add.apply(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">plus2.andThen(plus3).apply(<span class="number">1</span>); <span class="comment">// it equals 1+2+3 and returns 6.</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/lambda/" rel="tag"># lambda</a>
+              <a href="/tags/functional-programming/" rel="tag"># functional programming</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/05/shell-script-notes/" rel="prev" title="Linux Shell Script 的筆記">
+                  <i class="fa fa-chevron-left"></i> Linux Shell Script 的筆記
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/04/ansible-notes/" rel="next" title="Ansible 筆記">
+                  Ansible 筆記 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lawrence Lin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
