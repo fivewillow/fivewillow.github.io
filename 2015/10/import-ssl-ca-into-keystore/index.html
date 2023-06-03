@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-<meta name="generator" content="Hexo 6.0.0">
-
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -17,16 +15,17 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="JAVA 是用keystore 來管理憑證。如果我們都是用JDK 的keytool 來產生key 和憑證時，是不會遇到憑證匯入keystore 的問題。但是如果key 和憑證是已經存在，或並不是經由keytool 產生的。那我們要如何匯入憑證進入 keystore ？">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JAVA 是用 keystore 來管理憑證。如果我們都是用 JDK 的 keytool 來產生 key 和憑證時，是不會遇到憑證匯入 keystore 的問題。但是如果 key 和憑證是已經存在，或並不是經由 keytool 產生的。那我們要如何匯入憑證進入 keystore ？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何把ssl 憑證匯入Java Keystore">
 <meta property="og:url" content="http://www.lawrencelin.info/2015/10/import-ssl-ca-into-keystore/index.html">
 <meta property="og:site_name" content="Lawrence&#39;s note">
-<meta property="og:description" content="JAVA 是用keystore 來管理憑證。如果我們都是用JDK 的keytool 來產生key 和憑證時，是不會遇到憑證匯入keystore 的問題。但是如果key 和憑證是已經存在，或並不是經由keytool 產生的。那我們要如何匯入憑證進入 keystore ？">
+<meta property="og:description" content="JAVA 是用 keystore 來管理憑證。如果我們都是用 JDK 的 keytool 來產生 key 和憑證時，是不會遇到憑證匯入 keystore 的問題。但是如果 key 和憑證是已經存在，或並不是經由 keytool 產生的。那我們要如何匯入憑證進入 keystore ？">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2015-10-15T15:39:03.000Z">
 <meta property="article:modified_time" content="2022-01-17T16:02:56.812Z">
@@ -46,9 +45,13 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>如何把ssl 憑證匯入Java Keystore | Lawrence's note</title>
   
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44038136-3"></script>
-  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-44038136-3","only_pageview":false}</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNGEWPPBNG"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-JNGEWPPBNG","only_pageview":false}</script>
   <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
 
 
 
@@ -62,8 +65,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切換導航欄" role="button">
         <span class="toggle-line"></span>
@@ -82,7 +85,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
     </div>
   </div>
 </div>
@@ -90,26 +93,16 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
   </ul>
 </nav>
 
 
 
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -130,13 +123,13 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Lawrence Lin"
       src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460">
   <p class="site-author-name" itemprop="name">Lawrence Lin</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
@@ -152,27 +145,15 @@
   </nav>
 </div>
 
-
-
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="回到頂端">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -190,11 +171,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460">
       <meta itemprop="name" content="Lawrence Lin">
-      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Lawrence's note">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="如何把ssl 憑證匯入Java Keystore | Lawrence's note">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -242,9 +228,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>JAVA 是用keystore 來管理憑證。如果我們都是用JDK 的keytool 來產生key 和憑證時，是不會遇到憑證匯入keystore 的問題。但是如果key 和憑證是已經存在，或並不是經由keytool 產生的。那我們要如何匯入憑證進入 keystore ？</p>
-<span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><p>JAVA 是用 keystore 來管理憑證。如果我們都是用 JDK 的 keytool 來產生 key 和憑證時，是不會遇到憑證匯入 keystore 的問題。但是如果 key 和憑證是已經存在，或並不是經由 keytool 產生的。那我們要如何匯入憑證進入 keystore ？</p>
+<p><span id="more"></span></p>
 <h1><span id="事前準備"> 事前準備</span></h1>
 <ul>
 <li>安裝 <a target="_blank" rel="noopener" href="https://www.openssl.org/">openssl</a></li>
@@ -252,13 +237,11 @@
 </ul>
 <h1><span id="步驟"> 步驟</span></h1>
 <ol>
-<li>使用openssl 把key 和憑證合成pkcs12 格式的檔案，指令如下：</li>
+<li>使用 openssl 把 key 和憑證合成 pkcs12 格式的檔案，指令如下：<br>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -inkey [key] -in [憑證] -export -out [pkcs12 格式的檔名]</span><br></pre></td></tr></table></figure></li>
+<li>使用 keytool 把 pkcs12 格式的檔案匯入 keystore<br>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore [pkcs12 格式的檔名] -srcstoretype PKCS12 -destkeystore keystore</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -inkey [key] -in [憑證] -export -out [pkcs12 格式的檔名]</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>使用keytool 把pkcs12 格式的檔案匯入keystore</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore [pkcs12 格式的檔名] -srcstoretype PKCS12 -destkeystore keystore</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -310,7 +293,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -323,10 +306,22 @@
   </footer>
 
   
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+
 
 
 

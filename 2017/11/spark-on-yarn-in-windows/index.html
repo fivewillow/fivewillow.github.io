@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-<meta name="generator" content="Hexo 6.0.0">
-
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -17,21 +15,22 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="自從在 windows 安裝 Spark Standalone之後。就開始有把 Spark on Yarn 也安裝在 Windows 上的念頭？ 於是在工作閒暇之餘，開始這次的踩雷之旅。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lawrencelin.info","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="自從在 windows 安裝 Spark Standalone 之後。就開始有把 Spark on Yarn 也安裝在 Windows 上的念頭？ 於是在工作閒暇之餘，開始這次的踩雷之旅。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 windows 安裝 Spark on Yarn">
 <meta property="og:url" content="http://www.lawrencelin.info/2017/11/spark-on-yarn-in-windows/index.html">
 <meta property="og:site_name" content="Lawrence&#39;s note">
-<meta property="og:description" content="自從在 windows 安裝 Spark Standalone之後。就開始有把 Spark on Yarn 也安裝在 Windows 上的念頭？ 於是在工作閒暇之餘，開始這次的踩雷之旅。">
+<meta property="og:description" content="自從在 windows 安裝 Spark Standalone 之後。就開始有把 Spark on Yarn 也安裝在 Windows 上的念頭？ 於是在工作閒暇之餘，開始這次的踩雷之旅。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://www.lawrencelin.info/images/spark_in_windows/hadoop_001.png">
 <meta property="og:image" content="http://www.lawrencelin.info/images/spark_in_windows/hadoop_002.png">
 <meta property="article:published_time" content="2017-11-08T15:43:02.000Z">
-<meta property="article:modified_time" content="2022-01-17T16:02:56.815Z">
+<meta property="article:modified_time" content="2023-02-13T16:46:08.542Z">
 <meta property="article:author" content="Lawrence Lin">
 <meta property="article:tag" content="spark">
 <meta property="article:tag" content="windows">
@@ -48,9 +47,13 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>在 windows 安裝 Spark on Yarn | Lawrence's note</title>
   
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44038136-3"></script>
-  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-44038136-3","only_pageview":false}</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNGEWPPBNG"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-JNGEWPPBNG","only_pageview":false}</script>
   <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
 
 
 
@@ -64,8 +67,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切換導航欄" role="button">
         <span class="toggle-line"></span>
@@ -84,7 +87,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
     </div>
   </div>
 </div>
@@ -92,26 +95,16 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
   </ul>
 </nav>
 
 
 
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -127,18 +120,18 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> 部署前的準備</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text"> Cluster 主機的規劃</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text"> 設定 hosts</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"> 開始部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text"> 安裝所需軟體</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"> 安裝 Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text"> 安裝 Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text"> 設定環境變數</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"> 設定 Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text"> 設定 slave 的 host 或 IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"> 設定 core-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text"> 設定 hdfs-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.4.</span> <span class="nav-text"> 設定 mapred-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.5.</span> <span class="nav-text"> 設定 yarn-site.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text"> 啟動 Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text"> Master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text"> Slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text"> 檢視 WebUI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"> 驗證</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"> 曾經踩過的坑</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> 部署前的準備</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text"> Cluster 主機的規劃</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text"> 設定 hosts</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"> 開始部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text"> 安裝所需軟體</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"> &lt;a name&#x3D;&quot;install_hodoop&quot;&gt;&lt;&#x2F;a &gt; 安裝 Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text"> 安裝 Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text"> 設定環境變數</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"> 設定 Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text"> 設定 slave 的 host 或 IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text"> 設定 core-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text"> 設定 hdfs-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.4.</span> <span class="nav-text"> 設定 mapred-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.5.</span> <span class="nav-text"> 設定 yarn-site.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text"> 啟動 Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text"> Master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text"> Slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text"> 檢視 WebUI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"> 驗證</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"> 曾經踩過的坑</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Lawrence Lin"
       src="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460">
   <p class="site-author-name" itemprop="name">Lawrence Lin</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
@@ -154,27 +147,15 @@
   </nav>
 </div>
 
-
-
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="回到頂端">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -192,11 +173,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/10040461?v=3&s=460">
       <meta itemprop="name" content="Lawrence Lin">
-      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Lawrence's note">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在 windows 安裝 Spark on Yarn | Lawrence's note">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -218,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-01-18 00:02:56" itemprop="dateModified" datetime="2022-01-18T00:02:56+08:00">2022-01-18</time>
+      <time title="修改時間：2023-02-14 00:46:08" itemprop="dateModified" datetime="2023-02-14T00:46:08+08:00">2023-02-14</time>
     </span>
 
   
@@ -244,9 +230,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>自從<a href="http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/">在 windows 安裝 Spark Standalone</a>之後。就開始有把 Spark on Yarn 也安裝在 Windows 上的念頭？ 於是在工作閒暇之餘，開始這次的踩雷之旅。</p>
-<span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><p>自從<a href="http://www.lawrencelin.info/2017/11/spark-standalone-in-windows7/">在 windows 安裝 Spark Standalone</a> 之後。就開始有把 Spark on Yarn 也安裝在 Windows 上的念頭？ 於是在工作閒暇之餘，開始這次的踩雷之旅。</p>
+<p><span id="more"></span></p>
 <h1><span id="部署前的準備"> 部署前的準備</span></h1>
 <h2><span id="cluster-主機的規劃"> Cluster 主機的規劃</span></h2>
 <p>先準備三台 windows 的主機，其規劃如下:</p>
@@ -277,9 +262,9 @@
 </tbody>
 </table>
 <h2><span id="設定-hosts"> 設定 hosts</span></h2>
-<p>在windows 中， hosts 檔案是放在 <code>C:\Windows\System32\drivers\etc</code> 之下。<br>
-修改 hosts，如果hosts 不存在則新增一個並複製到每一台主機上。</p>
-<figure class="highlight sh"><figcaption><span>C:\Windows\System32\drivers\etc\hosts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.1 master</span><br><span class="line">192.168.10.2 slave01</span><br><span class="line">192.168.10.3 slave02</span><br></pre></td></tr></table></figure>
+<p>在 windows 中， hosts 檔案是放在  <code>C:\Windows\System32\drivers\etc</code>  之下。<br>
+修改 hosts，如果 hosts 不存在則新增一個並複製到每一台主機上。</p>
+<p><figure class="highlight sh"><figcaption><span>C:\Windows\System32\drivers\etc\hosts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.1 master</span><br><span class="line">192.168.10.2 slave01</span><br><span class="line">192.168.10.3 slave02</span><br></pre></td></tr></table></figure></p>
 <h1><span id="開始部署"> 開始部署</span></h1>
 <h2><span id="安裝所需軟體"> 安裝所需軟體</span></h2>
 <p>我們要部署的版本是 Spark 2.2。在部署之前，依照官方網站的需求，要先安裝這些軟體在每一台主機上。</p>
@@ -288,22 +273,22 @@
 <li>Scala 2.11.x (如果你不會用到，可以不用裝)</li>
 <li>Python 2.7/3.4 或之後的版本 (如果你不會用到，可以不用裝)</li>
 </ul>
-<h2><span id="安裝-hadoop"> 安裝 Hadoop</span></h2>
+<h2><span id="lta-namequotinstall_hodoopquotgtlta-gt-安裝-hadoop"> &lt;a name=&quot;install_hodoop&quot;&gt;&lt;/a &gt; 安裝 Hadoop</span></h2>
 <ol>
 <li>從 <a target="_blank" rel="noopener" href="http://hadoop.apache.org/releases.html">Hadoop 的官方網站下載</a>，預先編譯好的版本，<br>
 在這我們選擇 hadoop-2.7.4.tgz。</li>
-<li>下載完成後，我們使用解壓縮軟體，把它解開到你所想要放的位置。在這裡我們把它解壓縮到D 磁碟下，並且改名為 <code>hadoop</code>。</li>
+<li>下載完成後，我們使用解壓縮軟體，把它解開到你所想要放的位置。在這裡我們把它解壓縮到 D 磁碟下，並且改名為  <code>hadoop</code> 。</li>
 </ol>
-<p>在windows下，還需要編譯 hadoop 的原始碼來產生dll 檔及exe 檔。所幸，已經有神人幫我們編譯好，連到 <a target="_blank" rel="noopener" href="https://github.com/steveloughran/winutils">winutils</a>，選擇hadoop-2.7.1 目錄下的 bin。把全部的檔案都下載下來，並且放到hadoop 目錄下的bin。</p>
+<p>在 windows 下，還需要編譯 hadoop 的原始碼來產生 dll 檔及 exe 檔。所幸，已經有神人幫我們編譯好，連到 <a target="_blank" rel="noopener" href="https://github.com/steveloughran/winutils">winutils</a>，選擇 hadoop-2.7.1 目錄下的 bin。把全部的檔案都下載下來，並且放到 hadoop 目錄下的 bin。</p>
 <h2><span id="安裝-spark"> 安裝 Spark</span></h2>
 <ol>
 <li>從 <a target="_blank" rel="noopener" href="http://spark.apache.org/downloads.html">Spark 的官方網站下載</a>，預先編譯好的版本，<br>
 在這我們選擇 spark-2.2.0-bin-hadoop2.7.tgz。</li>
-<li>下載完成後，我們使用解壓縮軟體，把它解開到你所想要放的位置。在這裡我們把它解壓縮到D 磁碟下，並且改名為 <code>spark</code>。</li>
+<li>下載完成後，我們使用解壓縮軟體，把它解開到你所想要放的位置。在這裡我們把它解壓縮到 D 磁碟下，並且改名為  <code>spark</code> 。</li>
 </ol>
 <h2><span id="設定環境變數"> 設定環境變數</span></h2>
 <p>在安裝完後，需要設定環境變數，可以從 <strong>控制台</strong> -&gt; <strong>系統</strong> -&gt; <strong>進階系統設定</strong> -&gt; <strong>進階</strong> -&gt; <strong>環境變數</strong> 中進行設定.<br>
-以下是我們需要設定的環境變數</p>
+ 以下是我們需要設定的環境變數</p>
 <table>
 <thead>
 <tr>
@@ -316,96 +301,96 @@
 <tr>
 <td>JAVA_HOME</td>
 <td>Java 的安裝目錄</td>
-<td>設定JAVA 的家目錄</td>
+<td>設定 JAVA 的家目錄</td>
 </tr>
 <tr>
 <td>CLASSPATH</td>
 <td>%JAVA_HOME%\lib</td>
-<td>設定JAVA 的類別路徑</td>
+<td>設定 JAVA 的類別路徑</td>
 </tr>
 <tr>
 <td>SPARK_HOME</td>
 <td>SPARK 的安裝目錄</td>
-<td>設定SPARK 的家目錄</td>
+<td>設定 SPARK 的家目錄</td>
 </tr>
 <tr>
 <td>HADOOP_HOME</td>
 <td>HADOOP 的安裝目錄</td>
-<td>設定HADOOP 的家目錄</td>
+<td>設定 HADOOP 的家目錄</td>
 </tr>
 <tr>
 <td>HADOOP_CONF_HOME</td>
 <td>%HADOOP_HOME%/etc/hadoop</td>
-<td>設定HADOOP 的設定檔目錄</td>
+<td>設定 HADOOP 的設定檔目錄</td>
 </tr>
 <tr>
 <td>YARN_CONF_HOME</td>
 <td>%HADOOP_HOME%/etc/hadoop</td>
-<td>設定YARN 的設定檔目錄</td>
+<td>設定 YARN 的設定檔目錄</td>
 </tr>
 </tbody>
 </table>
-<p>接著將這些值附加在<code>PATH</code>之後</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%JAVA_HOME%\bin;%SPARK_HOME%\bin;%SPARK_HOME%\sbin;%HADOOP_HOME%\bin</span><br></pre></td></tr></table></figure>
+<p>接著將這些值附加在 <code>PATH</code>  之後<br>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%JAVA_HOME%\bin;%SPARK_HOME%\bin;%SPARK_HOME%\sbin;%HADOOP_HOME%\bin</span><br></pre></td></tr></table></figure></p>
 <h1><span id="設定-hadoop"> 設定 Hadoop</span></h1>
-<p>到<code>%HADOOP_HOME%/etc/hadoop</code>目錄來進行設定，總共有以下5個文件需要設定：</p>
+<p>到 <code>%HADOOP_HOME%/etc/hadoop</code>  目錄來進行設定，總共有以下 5 個文件需要設定：</p>
 <h2><span id="設定-slave-的-host-或-ip"> 設定 slave 的 host 或 IP</span></h2>
-<figure class="highlight sh"><figcaption><span>%HADOOP_HOME%/etc/hadoop/slave</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight sh"><figcaption><span>%HADOOP_HOME%/etc/hadoop/slave</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br></pre></td></tr></table></figure></p>
 <h2><span id="設定-core-sitexml"> 設定 core-site.xml</span></h2>
-<figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/core-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://master:9000/<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   &lt;!— 設定 hadoop 的暫存目錄—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/D:/workspaces/hadoop<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/core-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://master:9000/<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   &lt;!— 設定 hadoop 的暫存目錄—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/D:/workspaces/hadoop<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h2><span id="設定-hdfs-sitexml"> 設定 hdfs-site.xml</span></h2>
-<figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/hdfs-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:9001<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   &lt;!— 設定 hadoop name node 的工作目錄—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/D:/workspaces/hadoop/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   &lt;!— 設定 hadoop data node 的工作目錄—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/D:/workspaces/hadoop/dfs/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   &lt;!— 預設值為3，因為我們只有2台slave 主機，故設為2—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/hdfs-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:9001<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   &lt;!— 設定 hadoop name node 的工作目錄—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/D:/workspaces/hadoop/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   &lt;!— 設定 hadoop data node 的工作目錄—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/D:/workspaces/hadoop/dfs/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   &lt;!— 預設值為3，因為我們只有2台slave 主機，故設為2—&gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h2><span id="設定-mapred-sitexml"> 設定 mapred-site.xml</span></h2>
-<figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/mapred-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/mapred-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h2><span id="設定-yarn-sitexml"> 設定 yarn-site.xml</span></h2>
-<figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/yarn-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services.mapreduce.shuffle.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.mapred.ShuffleHandler<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8032<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8030<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.resource-tracker.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8035<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.admin.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8033<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>最後再把設定檔同步到其它台機器。</p>
+<p><figure class="highlight xml"><figcaption><span>%HADOOP_HOME%/etc/hadoop/yarn-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services.mapreduce.shuffle.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.mapred.ShuffleHandler<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8032<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8030<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.resource-tracker.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8035<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.admin.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8033<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure><br>
+ 最後再把設定檔同步到其它台機器。</p>
 <h1><span id="啟動-hadoop"> 啟動 Hadoop</span></h1>
 <h2><span id="master"> Master</span></h2>
-<p>如果是第一次執行，需要先做 name node 的格式化</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode -format</span><br></pre></td></tr></table></figure>
-<p>再編輯<code>%HADOOP_HOME%\sbin\start-dfs.cmd</code>，把啟動 data node 的指令註解起來。</p>
-<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-dfs.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; hadoop namenode</span><br><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; hadoop datanode</span></span><br></pre></td></tr></table></figure>
-<p>接著再編輯<code>%HADOOP_HOME%\sbin\start-yarn.cmd</code>，把啟動 node manager 的指令註解起來.</p>
-<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-yarn.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; yarn resourcemanager</span><br><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; yarn nodemanager</span></span><br></pre></td></tr></table></figure>
+<p>如果是第一次執行，需要先做 name node 的格式化<br>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode -format</span><br></pre></td></tr></table></figure></p>
+<p>再編輯 <code>%HADOOP_HOME%\sbin\start-dfs.cmd</code> ，把啟動 data node 的指令註解起來。<br>
+<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-dfs.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; hadoop namenode</span><br><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; hadoop datanode</span></span><br></pre></td></tr></table></figure></p>
+<p>接著再編輯 <code>%HADOOP_HOME%\sbin\start-yarn.cmd</code> ，把啟動 node manager 的指令註解起來.<br>
+<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-yarn.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; yarn resourcemanager</span><br><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; yarn nodemanager</span></span><br></pre></td></tr></table></figure></p>
 <p>編輯完後， 再以<strong>系統管理員身分執行</strong>來執行這二個檔。<br>
-可以使用 <code>jps</code>  指令來查看啟動的程序，正常的話，會有以下這些程序。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10024 ResourceManager</span><br><span class="line">13304 NameNode</span><br><span class="line">3212 Jps</span><br></pre></td></tr></table></figure>
+可以使用  <code>jps</code>   指令來查看啟動的程序，正常的話，會有以下這些程序。<br>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10024 ResourceManager</span><br><span class="line">13304 NameNode</span><br><span class="line">3212 Jps</span><br></pre></td></tr></table></figure></p>
 <h2><span id="slave"> Slave</span></h2>
-<p>編輯<code>%HADOOP_HOME%\sbin\start-dfs.cmd</code>，把啟動 name node 的指令註解起來。</p>
-<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-dfs.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; hadoop namenode</span></span><br><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; hadoop datanode</span><br></pre></td></tr></table></figure>
-<p>接著再編輯<code>%HADOOP_HOME%\sbin\start-yarn.cmd</code>，把啟動 resource manager 的指令註解起來。</p>
-<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-yarn.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; yarn resourcemanager</span></span><br><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; yarn nodemanager</span><br></pre></td></tr></table></figure>
+<p>編輯 <code>%HADOOP_HOME%\sbin\start-dfs.cmd</code> ，把啟動 name node 的指令註解起來。<br>
+<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-dfs.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; hadoop namenode</span></span><br><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; hadoop datanode</span><br></pre></td></tr></table></figure></p>
+<p>接著再編輯 <code>%HADOOP_HOME%\sbin\start-yarn.cmd</code> ，把啟動 resource manager 的指令註解起來。<br>
+<figure class="highlight cmd"><figcaption><span>%HADOOP_HOME%\sbin\start-yarn.cmd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">rem start &quot;Apache Hadoop Distribution&quot; yarn resourcemanager</span></span><br><span class="line"><span class="built_in">start</span> &quot;Apache Hadoop Distribution&quot; yarn nodemanager</span><br></pre></td></tr></table></figure></p>
 <p>編輯完後， 以 <strong>系統管理員身分執行</strong> 來執行這二個檔。<br>
-可以使用 <code>jps</code>  指令來查看啟動的程序， 正常的話， 會有以下這些程序。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10024 ResourceManager</span><br><span class="line">15372 NodeManager</span><br><span class="line">15392 Jps</span><br></pre></td></tr></table></figure>
+可以使用  <code>jps</code>   指令來查看啟動的程序， 正常的話， 會有以下這些程序。<br>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10024 ResourceManager</span><br><span class="line">15372 NodeManager</span><br><span class="line">15392 Jps</span><br></pre></td></tr></table></figure></p>
 <h2><span id="檢視-webui"> 檢視 WebUI</span></h2>
-<p>在瀏覽器上鍵入 <code>http://master:8088/cluster/nodes</code>，就可以看到 WebUI。上面會顯示目前Hadoop Cluster 的情況。</p>
+<p>在瀏覽器上鍵入  <code>http://master:8088/cluster/nodes</code> ，就可以看到 WebUI。上面會顯示目前 Hadoop Cluster 的情況。</p>
 <p><img src="/images/spark_in_windows/hadoop_001.png" alt="Spark on Yarn Web UI"></p>
 <h1><span id="驗證"> 驗證</span></h1>
-<p>在YARN 模式下，有二種運行模式 yarn-client 及yarn-cluster。<br>
-有關它們的區別可以參考 <a target="_blank" rel="noopener" href="https://www.iteblog.com/archives/1223.html">Spark:Yarn-cluster和Yarn-client区别与联系</a></p>
-<p>我們使用Spark 附的範例程式 <code>SparkPi</code> 來驗證是否可以正常運行。到 <code>SPARK_HOME</code> 之下，執行以下指令，你可以選擇是要執行Java 版本或是Python 版本。</p>
-<p><em>Java 版本</em></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yarn-client 模式</span></span><br><span class="line">spark-submit —class org.apache.spark.examples.SparkPi —master yarn-client examples/jars/spark-examples_2.11-2.2.0.jar 100</span><br><span class="line"><span class="comment"># yarn-cluster 模式</span></span><br><span class="line">spark-submit —class org.apache.spark.examples.SparkPi —master yarn-cluster examples/jars/spark-examples_2.11-2.2.0.jar 100</span><br></pre></td></tr></table></figure>
-<p><em>Python 版本</em></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yarn-client 模式</span></span><br><span class="line">spark-submit --master yarn-client examples/src/main/python/pi.py 100</span><br><span class="line"><span class="comment"># yarn-cluster 模式</span></span><br><span class="line">spark-submit --master yarn-cluster examples/src/main/python/pi.py 100</span><br></pre></td></tr></table></figure>
-<p>接著打開 WebUI， 鍵入 <code>http://master:8088/cluster/apps</code>就可以看到運行結果。</p>
+<p>在 YARN 模式下，有二種運行模式 yarn-client 及 yarn-cluster。<br>
+有關它們的區別可以參考 <a target="_blank" rel="noopener" href="https://www.iteblog.com/archives/1223.html">Spark:Yarn-cluster 和 Yarn-client 区别与联系</a></p>
+<p>我們使用 Spark 附的範例程式  <code>SparkPi</code>  來驗證是否可以正常運行。到  <code>SPARK_HOME</code>  之下，執行以下指令，你可以選擇是要執行 Java 版本或是 Python 版本。</p>
+<p><em>Java 版本</em><br>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yarn-client 模式</span></span><br><span class="line">spark-submit —class org.apache.spark.examples.SparkPi —master yarn-client examples/jars/spark-examples_2.11-2.2.0.jar 100</span><br><span class="line"><span class="comment"># yarn-cluster 模式</span></span><br><span class="line">spark-submit —class org.apache.spark.examples.SparkPi —master yarn-cluster examples/jars/spark-examples_2.11-2.2.0.jar 100</span><br></pre></td></tr></table></figure></p>
+<p><em>Python 版本</em><br>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yarn-client 模式</span></span><br><span class="line">spark-submit --master yarn-client examples/src/main/python/pi.py 100</span><br><span class="line"><span class="comment"># yarn-cluster 模式</span></span><br><span class="line">spark-submit --master yarn-cluster examples/src/main/python/pi.py 100</span><br></pre></td></tr></table></figure></p>
+<p>接著打開 WebUI， 鍵入  <code>http://master:8088/cluster/apps</code>  就可以看到運行結果。</p>
 <p><img src="/images/spark_in_windows/hadoop_002.png" alt="Spark on Yarn Web UI"></p>
 <h1><span id="曾經踩過的坑"> 曾經踩過的坑</span></h1>
-<p><strong>出現 <code>xxxxx on HDFS should be writable.</code> 的訊息</strong><br>
-這個是指在HDFS 文件系統下，沒有寫入目錄的權限，解決方式可以用以下指令來改變目錄的權限：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winutils chmod 766 -R &lt;目錄名稱&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>出現  <code>xxxxx on HDFS should be writable.</code>  的訊息</strong><br>
+這個是指在 HDFS 文件系統下，沒有寫入目錄的權限，解決方式可以用以下指令來改變目錄的權限：<br>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winutils <span class="built_in">chmod</span> 766 -R &lt;目錄名稱&gt;</span><br></pre></td></tr></table></figure></p>
 <p><strong>系統無法找到指定的批次標籤 - resourcemanager</strong><br>
-可能是批次檔的行結尾字元不正確，可以檢查行結尾字元是否為windows 格式:<code>&lt;CR&gt;&lt;LF&gt;</code></p>
-<p><strong>出現 <code>doesn't satisfy minimum allocations</code>  的訊息</strong><br>
-這是指所分配的資源不足， 或是不符合最小需求.  可以在 <code>yarn-site.xml</code> 中修改資源設定。</p>
-<figure class="highlight xml"><figcaption><span>yarn-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 分配記憶體資源, 至少要大於 1024 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.memory-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 分配CPU的核心資源, 通常是CPU的核心數--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>出現<code>Datanode denied communication with namenode because hostname cannot be resolved</code> 訊息</strong><br>
-這是因為 DNS 反解析不正確所造成的. 你可以在 <code>hdfs-site.xml</code> 中關掉 DNS 反查。</p>
-<figure class="highlight xml"><figcaption><span>hdfs-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.datanode.registration.ip-hostname-check<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>出現<code>java.lang.UnsatisfiedLinkError: org.apache.hadoop.io.nativeio.NativeIO</code> 訊息</strong><br>
-找不到或是缺少相關的 DLL 檔. 可以參照 <a href="#install_hodoop">安裝 Hadoop</a>， 安裝相關的DLL 檔。</p>
+ 可能是批次檔的行結尾字元不正確，可以檢查行結尾字元是否為 windows 格式: <code>&lt;CR&gt;&lt;LF&gt;</code></p>
+<p><strong>出現  <code>doesn't satisfy minimum allocations</code>   的訊息</strong><br>
+這是指所分配的資源不足， 或是不符合最小需求。可以在  <code>yarn-site.xml</code>  中修改資源設定。</p>
+<p><figure class="highlight xml"><figcaption><span>yarn-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 分配記憶體資源, 至少要大於 1024 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.memory-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 分配CPU的核心資源, 通常是CPU的核心數--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p><strong>出現 <code>Datanode denied communication with namenode because hostname cannot be resolved</code>  訊息</strong><br>
+這是因為 DNS 反解析不正確所造成的。你可以在  <code>hdfs-site.xml</code>  中關掉 DNS 反查。</p>
+<p><figure class="highlight xml"><figcaption><span>hdfs-site.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.datanode.registration.ip-hostname-check<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>出現 <code>java.lang.UnsatisfiedLinkError: org.apache.hadoop.io.nativeio.NativeIO</code>  訊息</strong><br>
+找不到或是缺少相關的 DLL 檔。可以參照 <a href="#install_hodoop">安裝 Hadoop</a>， 安裝相關的 DLL 檔。</p>
 
     </div>
 
@@ -453,7 +438,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -466,10 +451,22 @@
   </footer>
 
   
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+
 
 
 
